@@ -6,6 +6,7 @@ import SimpleConnect from './components/SimpleConnect';
 import AttackModal from './components/AttackModal';
 
 export default function Home() {
+  // VERCEL HOOK TEST: ACTIVATED
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTarget, setSelectedTarget] = useState('');
 
