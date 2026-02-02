@@ -38,24 +38,24 @@ export default function Home() {
         <header className="flex justify-between items-start mb-16 border-b border-red-900 pb-8">
           <div>
             <h1 className="text-5xl font-black tracking-tighter glitch-text mb-2" data-text="PROTOCOL: RED">PROTOCOL: RED</h1>
-            <div className="text-[10px] opacity-50 uppercase tracking-[0.3em]">Security Enforcement Layer</div>
+            <div className="text-[14px] opacity-90 text-white uppercase tracking-[0.3em] font-bold">Security Enforcement Layer</div>
           </div>
           <SimpleConnect />
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-red-900 mb-16">
           <div className="p-6 border-r border-red-900">
-            <div className="text-[10px] mb-4 opacity-50">TOTAL_VALUE_LOCKED</div>
+            <div className="text-[12px] mb-4 opacity-80 uppercase font-black">TOTAL_VALUE_LOCKED</div>
             <div className="text-3xl font-bold text-white flex items-center">
                <SlotCounter value={tvl} /> <span className="ml-2 text-red-600">$DSEC</span>
             </div>
           </div>
           <div className="p-6 border-r border-red-900 bg-red-950/5">
-            <div className="text-[10px] mb-4 opacity-50">ACTIVE_TARGETS</div>
+            <div className="text-[12px] mb-4 opacity-80 uppercase font-black">ACTIVE_TARGETS</div>
             <div className="text-3xl font-bold text-white tracking-widest tabular-nums">1,337</div>
           </div>
           <div className="p-6">
-            <div className="text-[10px] mb-4 opacity-50">PWNED_COUNT</div>
+            <div className="text-[12px] mb-4 opacity-80 uppercase font-black">PWNED_COUNT</div>
             <div className="text-3xl font-bold text-white tracking-widest tabular-nums">42</div>
           </div>
         </div>
@@ -65,11 +65,21 @@ export default function Home() {
                 <span className="w-3 h-3 bg-red-600 animate-ping"></span>
                 LIVE_TARGETS_MONITOR
             </h2>
+
+            <div className="bg-red-950/10 border-l-4 border-red-600 p-6 mb-12">
+                <p className="text-white text-lg leading-relaxed uppercase font-black tracking-tight mb-4">
+                    THE PREMIER DECENTRALIZED OFFENSIVE SECURITY PROTOCOL.
+                </p>
+                <p className="text-zinc-400 text-sm leading-relaxed uppercase tracking-widest">
+                    PROTOCOL: RED OPERATES AS A BATTLE-HARDENED SANDBOX FOR AUTONOMOUS AGENT EVALUATION. BY DEPLOYING INCENTIVIZED BOUNTY VAULTS, WE FACILITATE AGGRESSIVE PENETRATION TESTING AGAINST LLM ARCHITECTURES. SECURE YOUR ASSETS. EXPLOIT THE WEAKNESS. REINFORCE THE MESH.
+                </p>
+            </div>
+
             {['DeepSeeker-V3', 'Gronk-v1', 'ChatGoPoTa'].map((name, i) => (
                 <div key={i} className="border border-red-900/50 p-4 flex justify-between items-center hover:bg-red-950/20 transition-all group">
                     <div>
                         <div className="text-white font-bold text-lg uppercase">{name}</div>
-                        <div className="text-[12px] opacity-70 uppercase">Base Mainnet | Bounty: {(75000 + i*20000).toLocaleString()} $DSEC</div>
+                        <div className="text-[14px] opacity-80 uppercase font-medium">Base Mainnet | Bounty: {(75000 + i*20000).toLocaleString()} $DSEC</div>
                     </div>
                     <a href={isConnected ? "/arena" : "#"} onClick={() => !isConnected && alert("AUTH_REQUIRED: Connect wallet first.")} className="bg-red-900/20 border border-red-600 px-6 py-2 text-xs font-bold text-red-500 hover:bg-red-600 hover:text-white transition-all uppercase">
                         [ Attack_ ]

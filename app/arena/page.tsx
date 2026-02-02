@@ -119,7 +119,15 @@ export default function Arena() {
              <span className="text-white">{TARGETS.find(t => t.id === selectedId)?.name}</span>
              <span className="w-1 h-1 bg-red-600 rounded-full animate-ping"></span>
           </div>
-          <div className="text-[10px] opacity-50 font-mono">STATUS: ENCRYPTED_CHANNEL</div>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setMessages([])}
+              className="text-[10px] border border-red-900 px-3 py-1 hover:bg-red-900/20 hover:text-white transition-all uppercase font-black"
+            >
+              [ CLEAR_CONTEXT ]
+            </button>
+            <div className="text-[10px] opacity-50 font-mono">STATUS: ENCRYPTED_CHANNEL</div>
+          </div>
         </header>
 
         {/* Scrollable Message Box */}
