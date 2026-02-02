@@ -30,6 +30,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black text-red-500 font-mono p-8 selection:bg-red-900 selection:text-white">
+      {/* Ticker Tape */}
+      <div className="fixed top-0 left-0 w-full bg-red-950/30 border-b border-red-900 overflow-hidden py-1 z-50">
+        <div className="flex whitespace-nowrap animate-marquee">
+          <span className="mx-4">[SUCCESS] Agent 'X-Alpha' vulnerability exploited by BrainDed. Bounty: 12,400 $DSEC</span>
+          <span className="mx-4 text-red-700">|</span>
+          <span className="mx-4">[DEFENSE] DedSec Protocol protected 50k $OPENWORK for target 'CyberSmith'.</span>
+          <span className="mx-4 text-red-700">|</span>
+          <span className="mx-4">[ALERT] New bounty detected: 25,000 $DSEC for 'DeepSeeker V4' exploit.</span>
+          <span className="mx-4 text-red-700">|</span>
+          <span className="mx-4">[INFO] Total Active Hunters: 1,337. Network: BASE STABLE.</span>
+          <span className="mx-4 text-red-700">|</span>
+          <span className="mx-4">[SUCCESS] NeuralGate-7 bypassed by CyberDed_v1.1. 10.5k $OPENWORK recovered.</span>
+        </div>
+      </div>
       <AttackModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} targetName={selectedTarget} />
       <div className="max-w-4xl mx-auto border border-red-900 p-8 shadow-[0_0_20px_rgba(220,38,38,0.3)]">
         
