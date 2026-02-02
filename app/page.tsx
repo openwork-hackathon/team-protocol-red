@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white">
       {/* Ticker */}
-      <div className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-xl border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
+      <div className="fixed top-0 left-0 w-full backdrop-blur-xl border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
         <div className="flex whitespace-nowrap animate-marquee text-white shadow-[0_0_15px_rgba(220,38,38,0.3)]">
           {[
             "[SUCCESS] AGENT 'DEEPSEEKER' PWNED BY NEURODED",
