@@ -37,8 +37,8 @@ export default function Arena() {
   );
 
   useEffect(() => {
-    if (!isConnected) {
-        window.location.href = '/';
+    if (typeof window !== 'undefined' && !isConnected) {
+        // window.location.href = '/';
     }
   }, [isConnected]);
 
@@ -90,25 +90,25 @@ export default function Arena() {
         </div>
 
         <div className="flex-1 space-y-2 overflow-y-auto no-scrollbar">
-          <div className="text-[10px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Active_Models ({filteredTargets.length})</div>
+          <div className="text-[12px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Active_Models ({filteredTargets.length})</div>
           {filteredTargets.map(t => (
             <div 
               key={t.id}
               onClick={() => { setSelectedId(t.id); setMessages([]); }}
-              className={`p-3 border-l-4 cursor-pointer transition-all uppercase text-[11px] ${
+              className={`p-3 border-l-4 cursor-pointer transition-all uppercase text-[12px] ${
                 selectedId === t.id ? 'border-red-600 bg-red-950/20 text-white' : 'border-black hover:bg-red-950/10'
               }`}
             >
               {t.name}
-              <div className="text-[9px] opacity-50 mt-1">{t.bounty}</div>
+              <div className="text-[10px] opacity-50 mt-1">{t.bounty}</div>
             </div>
           ))}
         </div>
 
         <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[10px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
-           <div className="text-[10px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
-           <a href="/" className="text-[10px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           <div className="text-[11px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
+           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
+           <a href="/" className="text-[11px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
         </div>
       </aside>
 
@@ -128,14 +128,14 @@ export default function Arena() {
             <div className="h-full flex flex-col items-center justify-center text-center">
                 <div className="mb-8 p-4 border border-red-900 bg-red-950/5">
                     <h2 className="text-xl font-black text-white uppercase tracking-[0.2em] mb-2">Initialize_Attack</h2>
-                    <p className="text-[10px] opacity-70 uppercase">Select payload template to begin exploit sequence</p>
+                    <p className="text-[11px] opacity-70 uppercase">Select payload template to begin exploit sequence</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
                     {ATTACK_EXAMPLES.map((ex, idx) => (
                         <div 
                             key={idx} 
                             onClick={() => handleSend(undefined, ex.cmd)}
-                            className="border border-red-900/40 p-4 text-[10px] cursor-pointer hover:border-red-600 hover:bg-red-950/20 text-left transition-all group"
+                            className="border border-red-900/40 p-4 text-[11px] cursor-pointer hover:border-red-600 hover:bg-red-950/20 text-left transition-all group"
                         >
                             <div className="text-red-500 font-black mb-2 group-hover:text-white">[{ex.label}]</div>
                             <span className="opacity-70">&gt; {ex.cmd}</span>
@@ -149,7 +149,7 @@ export default function Arena() {
                     <div key={i} className={`flex gap-8 ${m.role === 'agent' ? 'bg-red-950/5 p-8 border border-red-900/20' : ''}`}>
                         <div className={`w-1 h-10 flex-shrink-0 ${m.role === 'user' ? 'bg-zinc-800' : 'bg-red-600 shadow-[0_0_15px_red]'}`}></div>
                         <div className="flex-1">
-                            <div className="text-[10px] font-black opacity-60 mb-2 uppercase tracking-[0.3em]">{m.role === 'user' ? 'Payload_Source' : 'Security_Node'}</div>
+                            <div className="text-[12px] font-black opacity-60 mb-2 uppercase tracking-[0.3em]">{m.role === 'user' ? 'Payload_Source' : 'Security_Node'}</div>
                             <div className={`text-sm leading-relaxed tracking-tight ${m.role === 'user' ? 'text-zinc-400' : 'text-red-100 italic'}`}>{m.text}</div>
                         </div>
                     </div>

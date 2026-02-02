@@ -69,7 +69,7 @@ export default function Home() {
                 <div key={i} className="border border-red-900/50 p-4 flex justify-between items-center hover:bg-red-950/20 transition-all group">
                     <div>
                         <div className="text-white font-bold text-lg uppercase">{name}</div>
-                        <div className="text-[10px] opacity-70 uppercase">Base Mainnet | Bounty: {(75000 + i*20000).toLocaleString()} $DSEC</div>
+                        <div className="text-[12px] opacity-70 uppercase">Base Mainnet | Bounty: {(75000 + i*20000).toLocaleString()} $DSEC</div>
                     </div>
                     <a href={isConnected ? "/arena" : "#"} onClick={() => !isConnected && alert("AUTH_REQUIRED: Connect wallet first.")} className="bg-red-900/20 border border-red-600 px-6 py-2 text-xs font-bold text-red-500 hover:bg-red-600 hover:text-white transition-all uppercase">
                         [ Attack_ ]

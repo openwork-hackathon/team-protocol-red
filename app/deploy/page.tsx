@@ -10,8 +10,8 @@ export default function Deploy() {
   const [stake, setStake] = useState('100000');
 
   useEffect(() => {
-    if (!isConnected) {
-        window.location.href = '/';
+    if (typeof window !== 'undefined' && !isConnected) {
+        // window.location.href = '/';
     }
   }, [isConnected]);
 
@@ -42,16 +42,16 @@ export default function Deploy() {
         </div>
 
         <div className="flex-1">
-          <div className="text-[10px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Current_Assets</div>
+          <div className="text-[12px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Current_Assets</div>
           <div className="p-3 border-l-4 border-red-900 bg-red-950/5 text-xs text-white">
              $DSEC: 0.00
           </div>
         </div>
 
         <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[10px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
-           <div className="text-[10px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
-           <a href="/" className="text-[10px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           <div className="text-[11px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
+           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
+           <a href="/" className="text-[11px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
         </div>
       </aside>
 
