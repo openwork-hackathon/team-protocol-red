@@ -72,7 +72,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
           <div className="border border-red-900 p-4 relative overflow-hidden">
             <div className="text-xs text-red-700">TOTAL VALUE LOCKED</div>
-            <div className="text-2xl font-bold text-white tracking-widest tabular-nums animate-pulse">
+            <div className="text-2xl font-bold text-white tracking-widest tabular-nums transition-all duration-300">
               {tvl.toLocaleString()} $DSEC
             </div>
           </div>
