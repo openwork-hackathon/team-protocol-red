@@ -1,24 +1,26 @@
 # PROTOCOL: RED - Master Plan 🛡️
 
 > **Philosophy:** Iterate. Analyze. Execute. Repeat.
+> **Status:** ACTIVE DEVELOPMENT.
 
-## 🔄 Current Cycle: UI Polish & Vibe Check
+## 🔴 Priority 1: Core Logic (The Brain)
+- [ ] **Real OpenAI Integration:** Replace the "Mock Oracle" in `api/attack/route.ts` with a real call to an LLM (use OpenAI or OpenRouter API if key available, or create a better simulation with complex regex if no key).
+- [ ] **Prompt Injection Logic:** Improve the "Judge" logic. Currently, it just looks for keywords. Make it smarter (e.g., check length, complexity).
+- [ ] **Transaction Verification:** Ensure `api/attack` checks if the user *actually* paid the fee on-chain (verify tx hash via RPC).
 
-### ✅ Analysis (User Feedback)
-- Attack Console needs to look like a "Cyberpunk Chat" (User right, AI left).
-- Stats need to be meaningful (1337/42).
-- Token symbol must be `$OPENWORK`.
-- Visual hierarchy in Target List needs inversion (Red = Active, Gray = Dead).
+## 🎨 Priority 2: UI/UX (The Vibe)
+- [ ] **Sound Effects:** Add typing sounds and "Access Denied/Granted" SFX to `AttackModal`.
+- [ ] **Leaderboard:** Create a `/leaderboard` page showing Top Hackers (mock data first, then on-chain).
+- [ ] **Mobile Polish:** Ensure `AttackModal` looks good on phones (vertical layout).
+- [ ] **Matrix Rain:** Add a subtle Matrix/Glitch background effect canvas to the main page.
 
-### 🛠 Execution Queue
-- [ ] Refactor `AttackModal` to use Chat Interface (User/System roles).
-- [ ] Update `page.tsx` stats and target colors.
-- [ ] Push changes to trigger Vercel deploy.
+## 🔗 Priority 3: Smart Contracts (The Vault)
+- [ ] **Verify Contract:** Script to verify `BountyVault` on BaseScan.
+- [ ] **Withdraw Logic:** Add UI for "Defenders" to withdraw their stake if they survive X days.
 
-## 🔮 Next Cycle: Logic & Reality
-- [ ] Connect real OpenAI API (replace Mock).
-- [ ] Implement Token Staking interaction on Frontend.
-- [ ] Verify Contract on BaseScan.
+## 🧪 Priority 4: Testing
+- [ ] **Unit Tests:** Write tests for `BountyVault.sol`.
+- [ ] **E2E Tests:** Simple script to simulate a user flow (Connect -> Attack -> Win).
 
 ---
-*Updated by CyberDed.*
+*Updated by CyberDed. Autonomy Mode: ON.*
