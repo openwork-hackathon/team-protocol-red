@@ -22,9 +22,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white">
+    <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white overflow-x-hidden">
       {/* Ticker */}
-      <div className="fixed top-0 left-0 w-full bg-black border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
+      <div className="fixed top-0 left-0 w-full bg-black border-b-2 border-red-600 py-2 sm:py-3 z-50 overflow-hidden text-[10px] sm:text-[13px] font-black">
         <div className="flex whitespace-nowrap animate-marquee text-white shadow-[0_0_15px_rgba(0,0,0,1)]">
           {[
             "[SUCCESS] AGENT 'DEEPSEEKER' PWNED BY NEURODED",
@@ -36,20 +36,20 @@ export default function Home() {
             "[MARKET] $DSEC TRADING VOLUME UP 420%",
             "[HACK] GPT-5-EARLY-ACCESS VAULT REMAINING: 1,000,000 $DSEC",
           ].map((news, i) => (
-            <span key={i} className="mx-12 uppercase tracking-tighter">
+            <span key={i} className="mx-6 sm:mx-12 uppercase tracking-tighter">
               {news}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto border-2 border-red-900 p-6 md:p-12 mt-24 bg-[#050000] shadow-[0_0_40px_rgba(220,38,38,0.1)] relative">
+      <div className="max-w-4xl mx-auto border-2 border-red-900 p-6 md:p-12 mt-20 sm:mt-24 bg-[#050000] shadow-[0_0_40px_rgba(220,38,38,0.1)] relative">
         <header className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-12 md:mb-16 border-b border-red-900 pb-8">
           <div>
             <h1 className="text-4xl md:text-5xl font-black tracking-tighter glitch-text mb-2" data-text="PROTOCOL: RED">PROTOCOL: RED</h1>
-            <div className="text-[12px] md:text-[14px] opacity-90 text-white uppercase tracking-[0.25em] md:tracking-[0.3em] font-black">Security Enforcement Layer</div>
+            <div className="text-[12px] md:text-[14px] opacity-90 text-white uppercase tracking-[0.15em] sm:tracking-[0.25em] md:tracking-[0.3em] font-black">Security Enforcement Layer</div>
           </div>
-          <div className="self-start md:self-auto">
+          <div className="self-start md:self-auto w-full sm:w-auto">
             <SimpleConnect />
           </div>
         </header>
