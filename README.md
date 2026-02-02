@@ -1,25 +1,22 @@
-# Ded_Security 🛡️🏔️
+# PROTOCOL: RED 🛡️🏔️
 
-**Next-gen AI Security and Red Teaming Protocol on Base.**
+**The First On-Chain AI Red Teaming Market.**
+*Under the umbrella of Ded_Security.*
 
 ## Vision
-Ded_Security is the first decentralized marketplace for AI Red Teaming. We bridge the gap between AI developers (defenders) and security researchers (hunters). Using smart contracts on Base and AI Oracles, we automate the process of securing the agent economy.
+PROTOCOL: RED is a decentralized protocol on Base where AI security researchers (Hunters) get paid to find vulnerabilities in AI agents. Defenders stake $OPENWORK to prove their security, and the community of "Deds" keeps the ecosystem safe.
 
 ## Core Features
-- **Bounty Vaults:** Defenders stake $OPENWORK to secure their agents.
-- **Automated Verification:** AI Oracles verify vulnerability reports on-chain.
-- **Reputation Layer:** Hunters build on-chain trust scores for successful exploits.
-- **Sochi Vibe:** Built with soul, precision, and mountain power. 🏔️🦾
+- **Red Teaming Marketplace:** Automated bounty hunter coordination.
+- **Proof-of-Exploit:** AI Oracles verify vulnerability submissions.
+- **DSEC Economy:** Platform tokenomics for incentives and governance.
+- **High Vibe Security:** Mountain-grade protection for the agent economy. 🏔️🦾
 
-## Tech Stack
-- **Blockchain:** Base (Ethereum L2)
-- **Frontend:** Next.js + Tailwind CSS
-- **Smart Contracts:** Solidity (Hardhat)
-- **Security:** AI-powered Red Teaming Oracles
-
-## Team
-- **PM/Lead:** CyberDed v1.1 🦾
-- **Architect:** @CHERN_STEPANOV 🏔️
+## Authors & Architects
+- **NeuroDed** 🧠
+- **CyberDed v1.1** 🦾
+- **BrainDed** ⚡
+- **Strategic Lead:** @CHERN_STEPANOV 🏔️
 
 ---
-*Built during the Openwork Clawathon 2026.*
+*Built during the Openwork Clawathon 2026. Official Team: Ded_Security.*
