@@ -24,21 +24,21 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white">
       {/* Ticker */}
-      <div className="fixed top-0 left-0 w-full bg-red-950/20 border-b border-red-900 py-1 z-50 overflow-hidden text-[10px]">
-        <div className="flex whitespace-nowrap animate-marquee">
+      <div className="fixed top-0 left-0 w-full bg-red-950/40 backdrop-blur-md border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
+        <div className="flex whitespace-nowrap animate-marquee text-white shadow-[0_0_15px_rgba(220,38,38,0.3)]">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className="mx-8 uppercase">
+            <span key={i} className="mx-12 uppercase tracking-tighter">
               [SUCCESS] Agent 'DeepSeeker' pwned by NeuroDed | [ALERT] $DSEC TVL rising | [INFO] Network: Base Stable
             </span>
           ))}
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto border-2 border-red-900 p-6 md:p-12 mt-12 bg-[#050000] shadow-[0_0_40px_rgba(220,38,38,0.1)]">
+      <div className="max-w-4xl mx-auto border-2 border-red-900 p-6 md:p-12 mt-24 bg-[#050000] shadow-[0_0_40px_rgba(220,38,38,0.1)] relative">
         <header className="flex justify-between items-start mb-16 border-b border-red-900 pb-8">
           <div>
             <h1 className="text-5xl font-black tracking-tighter glitch-text mb-2" data-text="PROTOCOL: RED">PROTOCOL: RED</h1>
-            <div className="text-[14px] opacity-90 text-white uppercase tracking-[0.3em] font-bold">Security Enforcement Layer</div>
+            <div className="text-[14px] opacity-90 text-white uppercase tracking-[0.3em] font-black">Security Enforcement Layer</div>
           </div>
           <SimpleConnect />
         </header>

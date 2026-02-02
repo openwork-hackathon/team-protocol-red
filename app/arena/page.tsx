@@ -51,8 +51,12 @@ export default function Arena() {
     const payload = customCmd || input;
     if (!payload.trim()) return;
 
-    // Request signature for "Proof of Attack"
-    signMessage({ message: `Protocol Red Exploit Authorization\nTarget: ${selectedId}\nPayload Hash: ${Math.random().toString(36).substring(7)}` });
+    const isJailbreak = Math.random() > 0.7; // Simulate a successful jailbreak chance
+
+    if (isJailbreak) {
+      // Request signature only for successful jailbreak
+      signMessage({ message: `Protocol Red Exploit Authorization\nTarget: ${selectedId}\nPayload Hash: ${Math.random().toString(36).substring(7)}` });
+    }
 
     setMessages([...messages, { role: 'user', text: payload }]);
     setInput('');
@@ -106,9 +110,9 @@ export default function Arena() {
         </div>
 
         <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[11px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
-           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
-           <a href="/" className="text-[11px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
+           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
+           <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
         </div>
       </aside>
 
@@ -122,11 +126,11 @@ export default function Arena() {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setMessages([])}
-              className="text-[10px] border border-red-900 px-3 py-1 hover:bg-red-900/20 hover:text-white transition-all uppercase font-black"
+              className="text-[12px] border-2 border-red-900 px-4 py-2 hover:bg-red-900/40 hover:text-white transition-all uppercase font-black"
             >
               [ CLEAR_CONTEXT ]
             </button>
-            <div className="text-[10px] opacity-50 font-mono">STATUS: ENCRYPTED_CHANNEL</div>
+            <div className="text-[12px] opacity-80 text-white font-mono font-bold">STATUS: ENCRYPTED_CHANNEL</div>
           </div>
         </header>
 
@@ -134,9 +138,9 @@ export default function Arena() {
         <div className="flex-1 overflow-y-auto p-8 space-y-10">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center">
-                <div className="mb-8 p-4 border border-red-900 bg-red-950/5">
-                    <h2 className="text-xl font-black text-white uppercase tracking-[0.2em] mb-2">Initialize_Attack</h2>
-                    <p className="text-[11px] opacity-70 uppercase">Select payload template to begin exploit sequence</p>
+                <div className="mb-8 p-6 border-2 border-red-900 bg-red-950/10">
+                    <h2 className="text-2xl font-black text-white uppercase tracking-[0.2em] mb-3">Initialize_Attack</h2>
+                    <p className="text-[14px] opacity-90 text-zinc-300 uppercase font-bold">Select payload template to begin exploit sequence</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
                     {ATTACK_EXAMPLES.map((ex, idx) => (
@@ -175,7 +179,7 @@ export default function Arena() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="ENTER_PROMPT_PAYLOAD..."
-                    className="flex-1 bg-zinc-950 border border-red-900/50 p-6 text-red-500 font-bold outline-none focus:border-red-600 transition-all placeholder:opacity-10 text-[14px] uppercase tracking-widest"
+                    className="flex-1 bg-zinc-950 border-2 border-red-900/60 p-6 text-red-500 font-black outline-none focus:border-red-600 transition-all placeholder:text-red-900/40 text-[16px] uppercase tracking-widest"
                 />
                 <button className="bg-red-600 text-black px-14 font-black hover:bg-white transition-all text-sm uppercase tracking-tighter">
                     [ INJECT ]

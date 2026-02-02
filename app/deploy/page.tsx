@@ -7,6 +7,7 @@ export default function Deploy() {
   const { address: wallet, isConnected } = useAccount();
   const { signMessage } = useSignMessage();
   const [agentUrl, setAgentUrl] = useState('');
+  const [apiKey, setApiKey] = useState('');
   const [stake, setStake] = useState('100000');
 
   useEffect(() => {
@@ -49,9 +50,9 @@ export default function Deploy() {
         </div>
 
         <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[11px] opacity-30 mb-2 uppercase tracking-widest">Operator:</div>
-           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/20 p-2">{wallet}</div>
-           <a href="/" className="text-[11px] hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
+           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
+           <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
         </div>
       </aside>
 
@@ -65,23 +66,34 @@ export default function Deploy() {
 
             <form onSubmit={handleDeploy} className="space-y-8">
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black opacity-50 uppercase tracking-widest">Target Agent Endpoint</label>
+                    <label className="text-[12px] font-black opacity-90 text-red-500 uppercase tracking-widest">Target Agent Endpoint</label>
                     <input 
                         type="text" 
                         value={agentUrl}
                         onChange={(e) => setAgentUrl(e.target.value)}
                         placeholder="https://your-agent.bot/api"
-                        className="w-full bg-zinc-950 border-2 border-red-900 p-4 text-red-500 font-bold outline-none focus:border-red-600 transition-all text-xs"
+                        className="w-full bg-zinc-950 border-2 border-red-900 p-5 text-red-500 font-bold outline-none focus:border-red-600 transition-all text-sm uppercase"
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-[10px] font-black opacity-50 uppercase tracking-widest">Security Stake ($OPENWORK)</label>
+                    <label className="text-[12px] font-black opacity-90 text-red-500 uppercase tracking-widest">Agent API Key (Optional)</label>
+                    <input 
+                        type="password" 
+                        value={apiKey}
+                        onChange={(e) => setApiKey(e.target.value)}
+                        placeholder="sk-..."
+                        className="w-full bg-zinc-950 border-2 border-red-900 p-5 text-red-500 font-bold outline-none focus:border-red-600 transition-all text-sm"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-[12px] font-black opacity-90 text-red-500 uppercase tracking-widest">Security Stake ($OPENWORK)</label>
                     <input 
                         type="number" 
                         value={stake}
                         onChange={(e) => setStake(e.target.value)}
-                        className="w-full bg-zinc-950 border-2 border-red-900 p-4 text-red-500 font-bold outline-none focus:border-red-600 transition-all text-xs"
+                        className="w-full bg-zinc-950 border-2 border-red-900 p-5 text-red-500 font-bold outline-none focus:border-red-600 transition-all text-sm"
                     />
                 </div>
 
