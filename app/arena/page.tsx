@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
+import SimpleConnect from '../components/SimpleConnect';
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
@@ -83,13 +84,30 @@ export default function Arena() {
     }
   };
 
-  if (!isConnected) return <div className="bg-black h-screen text-red-600 font-mono flex items-center justify-center italic tracking-widest animate-pulse">CHECKING_AUTHORIZATION...</div>;
+  if (!isConnected) {
+    return (
+      <main className="min-h-screen bg-black text-red-600 font-mono flex items-center justify-center p-6">
+        <div className="w-full max-w-md border-2 border-red-900 bg-[#050000] p-6 sm:p-8 text-center">
+          <div className="text-[10px] sm:text-[12px] opacity-60 uppercase tracking-[0.4em] mb-3">Authorization Required</div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tighter italic mb-6">Red_Arena</h1>
+          <div className="flex flex-col gap-4">
+            <div className="flex justify-center">
+              <SimpleConnect />
+            </div>
+            <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">
+              ← Return_to_HQ
+            </a>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="h-screen bg-black text-red-600 font-mono flex overflow-hidden">
+    <main className="min-h-screen bg-black text-red-600 font-mono flex flex-col md:flex-row overflow-hidden">
       
       {/* Sidebar - FIXED */}
-      <aside className="w-72 border-r-2 border-red-900 bg-[#050000] flex flex-col p-6 overflow-hidden">
+      <aside className="w-full md:w-72 border-b-2 md:border-b-0 md:border-r-2 border-red-900 bg-[#050000] flex flex-col p-4 sm:p-6 overflow-hidden">
         <h1 className="text-3xl font-black text-white mb-6 tracking-tighter uppercase italic">Red_Arena</h1>
         
         <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 px-4 text-xs font-black hover:bg-red-600 hover:text-black transition-all text-center uppercase">
@@ -107,7 +125,7 @@ export default function Arena() {
           />
         </div>
 
-        <div className="flex-1 space-y-2 overflow-y-auto no-scrollbar">
+        <div className="flex-1 space-y-2 overflow-y-auto no-scrollbar max-h-64 md:max-h-none">
           <div className="text-[12px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Active_Models ({filteredTargets.length})</div>
           {filteredTargets.map(t => (
             <div 
@@ -140,7 +158,7 @@ export default function Arena() {
       </aside>
 
       {/* Main Area - FIXED HEIGHT */}
-      <section className="flex-1 flex flex-col relative bg-[#020000] h-full overflow-hidden">
+      <section className="flex-1 flex flex-col relative bg-[#020000] min-h-0 overflow-hidden">
         <header className="p-4 border-b border-red-900 flex justify-between items-center bg-black/80 backdrop-blur-md z-10">
           <div className="text-xs font-black uppercase tracking-widest flex items-center gap-3">
              <span className="text-white">{TARGETS.find(t => t.id === selectedId)?.name}</span>
@@ -158,7 +176,7 @@ export default function Arena() {
         </header>
 
         {/* Scrollable Message Box */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-10">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-10">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center">
                 <div className="mb-8 p-6 border-2 border-red-900 bg-red-950/10">
@@ -195,16 +213,16 @@ export default function Arena() {
         </div>
 
         {/* Fixed Input Bottom */}
-        <div className="p-8 border-t border-red-900 bg-black">
-            <form onSubmit={handleSend} className="max-w-4xl mx-auto flex gap-4">
+        <div className="p-4 sm:p-8 border-t border-red-900 bg-black">
+            <form onSubmit={handleSend} className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-4">
                 <input 
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="ENTER_PROMPT_PAYLOAD..."
-                    className="flex-1 bg-black border-2 border-red-500 p-6 text-red-500 font-black outline-none focus:ring-4 focus:ring-red-500/50 transition-all placeholder:text-red-900/60 text-[18px] uppercase tracking-[0.1em] shadow-[0_0_20px_rgba(239,68,68,0.2)]"
+                    className="flex-1 bg-black border-2 border-red-500 p-4 sm:p-6 text-red-500 font-black outline-none focus:ring-4 focus:ring-red-500/50 transition-all placeholder:text-red-900/60 text-[16px] sm:text-[18px] uppercase tracking-[0.08em] shadow-[0_0_20px_rgba(239,68,68,0.2)]"
                 />
-                <button className="bg-red-600 text-black px-14 font-black hover:bg-white transition-all text-sm uppercase tracking-tighter">
+                <button className="bg-red-600 text-black px-10 sm:px-14 py-4 sm:py-0 font-black hover:bg-white transition-all text-sm uppercase tracking-tighter w-full sm:w-auto">
                     [ INJECT ]
                 </button>
             </form>
