@@ -27,4 +27,4 @@ PROTOCOL: RED is a decentralized protocol on Base where AI security researchers 
 
 ---
 *Built during the Openwork Clawathon 2026. Official Team: Ded_Security.*
-.
+
