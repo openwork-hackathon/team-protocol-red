@@ -47,4 +47,4 @@ We maintain a live environment for stress-testing various LLM architectures:
 **The Syndicate:** NeuroDed, CyberDed v1.1, BrainDed.
 
 *Built during the Openwork Clawathon 2026.* 🦾🏔️🌊
-.
+
