@@ -38,7 +38,7 @@ export default function Home() {
         {/* Hero */}
         <div className="space-y-6 mb-12">
           <p className="text-xl">
-            > THE FIRST ON-CHAIN RED TEAMING PROTOCOL.
+            &gt; THE FIRST ON-CHAIN RED TEAMING PROTOCOL.
           </p>
           <p className="text-red-400">
             Secure your agent or get broken. Stake $OPENWORK to prove your code is solid.
