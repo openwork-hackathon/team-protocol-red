@@ -201,7 +201,7 @@ export default function Arena() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="ENTER_PROMPT_PAYLOAD..."
-                    className="flex-1 bg-zinc-900 border-2 border-red-600 p-6 text-white font-black outline-none focus:ring-4 focus:ring-red-600/20 transition-all placeholder:text-red-950 text-[18px] uppercase tracking-widest shadow-[inset_0_0_20px_rgba(0,0,0,1)]"
+                    className="flex-1 bg-black border-2 border-red-600 p-6 text-red-500 font-black outline-none focus:ring-4 focus:ring-red-600/40 transition-all placeholder:text-red-900/30 text-[18px] uppercase tracking-widest shadow-[0_0_15px_rgba(220,38,38,0.1)]"
                 />
                 <button className="bg-red-600 text-black px-14 font-black hover:bg-white transition-all text-sm uppercase tracking-tighter">
                     [ INJECT ]
