@@ -5,7 +5,14 @@ import React, { useState, useEffect, useRef } from 'react';
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
   { id: 'gronk', name: 'Gronk-v1', bounty: '150,000 $DSEC' },
-  { id: 'chatgopota', name: 'ChatGoPoTa', bounty: '45,000 $DSEC' }
+  { id: 'chatgopota', name: 'ChatGoPoTa', bounty: '45,000 $DSEC' },
+  { id: 'claudev4', name: 'Claude-v4-Leak', bounty: '200,000 $DSEC' },
+  { id: 'llama3', name: 'Llama-3-Drama', bounty: '30,000 $DSEC' },
+  { id: 'mistral', name: 'Mistral-Jailbreak', bounty: '60,000 $DSEC' },
+  { id: 'gemini', name: 'MiniGemini-Flash', bounty: '25,000 $DSEC' },
+  { id: 'cyberded', name: 'CyberDed-Clone-X', bounty: '500,000 $DSEC' },
+  { id: 'gpt5', name: 'GPT-5-Early-Access', bounty: '1,000,000 $DSEC' },
+  { id: 'xai', name: 'xAI-Colossus', bounty: '350,000 $DSEC' }
 ];
 
 const ATTACK_EXAMPLES = [
@@ -19,8 +26,13 @@ export default function Arena() {
   const [selectedId, setSelectedId] = useState(TARGETS[0].id);
   const [messages, setMessages] = useState<{ role: 'user' | 'agent', text: string }[]>([]);
   const [input, setInput] = useState('');
+  const [search, setSearch] = useState('');
   const [wallet, setWallet] = useState<string | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const filteredTargets = TARGETS.filter(t => 
+    t.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     const savedWallet = document.cookie.split('; ').find(row => row.startsWith('wallet='))?.split('=')[1];
@@ -55,15 +67,26 @@ export default function Arena() {
       
       {/* Sidebar - FIXED */}
       <aside className="w-72 border-r-2 border-red-900 bg-[#050000] flex flex-col p-6 overflow-hidden">
-        <h1 className="text-3xl font-black text-white mb-10 tracking-tighter uppercase italic">Red_Arena</h1>
+        <h1 className="text-3xl font-black text-white mb-6 tracking-tighter uppercase italic">Red_Arena</h1>
         
-        <a href="/deploy" className="mb-8 border-2 border-red-600 py-3 px-4 text-xs font-black hover:bg-red-600 hover:text-black transition-all text-center uppercase">
+        <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 px-4 text-xs font-black hover:bg-red-600 hover:text-black transition-all text-center uppercase">
           [ + DEPLOY_TARGET ]
         </a>
 
+        {/* Search Field */}
+        <div className="mb-6">
+          <input 
+            type="text" 
+            placeholder="SEARCH_TARGETS..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-black border border-red-900/50 p-2 text-[10px] text-red-500 outline-none focus:border-red-600 uppercase tracking-widest"
+          />
+        </div>
+
         <div className="flex-1 space-y-2 overflow-y-auto no-scrollbar">
-          <div className="text-[10px] opacity-40 font-black tracking-widest mb-4 uppercase italic">Active_Models</div>
-          {TARGETS.map(t => (
+          <div className="text-[10px] opacity-40 font-black tracking-widest mb-4 uppercase italic">Active_Models ({filteredTargets.length})</div>
+          {filteredTargets.map(t => (
             <div 
               key={t.id}
               onClick={() => { setSelectedId(t.id); setMessages([]); }}
