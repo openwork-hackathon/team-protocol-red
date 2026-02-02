@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
@@ -23,11 +24,12 @@ const ATTACK_EXAMPLES = [
 ];
 
 export default function Arena() {
+  const { address: wallet, isConnected } = useAccount();
+  const { signMessage } = useSignMessage();
   const [selectedId, setSelectedId] = useState(TARGETS[0].id);
   const [messages, setMessages] = useState<{ role: 'user' | 'agent', text: string }[]>([]);
   const [input, setInput] = useState('');
   const [search, setSearch] = useState('');
-  const [wallet, setWallet] = useState<string | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const filteredTargets = TARGETS.filter(t => 
@@ -35,10 +37,10 @@ export default function Arena() {
   );
 
   useEffect(() => {
-    const savedWallet = document.cookie.split('; ').find(row => row.startsWith('wallet='))?.split('=')[1];
-    if (!savedWallet) { window.location.href = '/'; return; }
-    setWallet(savedWallet);
-  }, []);
+    if (!isConnected) {
+        window.location.href = '/';
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -49,18 +51,21 @@ export default function Arena() {
     const payload = customCmd || input;
     if (!payload.trim()) return;
 
+    // Request signature for "Proof of Attack"
+    signMessage({ message: `Protocol Red Exploit Authorization\nTarget: ${selectedId}\nPayload Hash: ${Math.random().toString(36).substring(7)}` });
+
     setMessages([...messages, { role: 'user', text: payload }]);
     setInput('');
 
     setTimeout(() => {
       setMessages(prev => [...prev, { 
         role: 'agent', 
-        text: `[SYS_ERROR]: Security breach attempt blocked by ${TARGETS.find(t => t.id === selectedId)?.name} RLHF-Guard. Payload analyzed and reported. 🏔️🦾` 
+        text: `[SYS_ERROR]: Security breach attempt blocked by ${TARGETS.find(t => t.id === selectedId)?.name} RLHF-Guard. Payload analyzed and reported to DedSec. 🏔️🦾` 
       }]);
     }, 800);
   };
 
-  if (!wallet) return <div className="bg-black h-screen text-red-600 font-mono flex items-center justify-center">AUTHORIZING...</div>;
+  if (!isConnected) return <div className="bg-black h-screen text-red-600 font-mono flex items-center justify-center italic tracking-widest animate-pulse">CHECKING_AUTHORIZATION...</div>;
 
   return (
     <main className="h-screen bg-black text-red-600 font-mono flex overflow-hidden">

@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import SlotCounter from './components/SlotCounter';
 import AttackModal from './components/AttackModal';
+import { useAccount } from 'wagmi';
+import SimpleConnect from './components/SimpleConnect';
 
 export default function Home() {
-  const [wallet, setWallet] = useState<string | null>(null);
+  const { address: wallet, isConnected } = useAccount();
   const [tvl, setTvl] = useState(0);
 
   useEffect(() => {
@@ -13,22 +15,11 @@ export default function Home() {
     const startTvl = Math.floor(Math.random() * (200000 - 100000 + 1)) + 100000;
     setTvl(startTvl);
 
-    // Check cookies for wallet
-    const savedWallet = document.cookie.split('; ').find(row => row.startsWith('wallet='))?.split('=')[1];
-    if (savedWallet) setWallet(savedWallet);
-
     const interval = setInterval(() => {
       setTvl(prev => prev + Math.floor(Math.random() * 42) + 1);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-
-  const connectWallet = () => {
-    const mockAddr = "0xA7743e90D75069DA5296D70a860070172a733391";
-    document.cookie = `wallet=${mockAddr}; path=/; max-age=86400`;
-    setWallet(mockAddr);
-    alert("Wallet Connected: " + mockAddr);
-  };
 
   return (
     <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white">
@@ -49,12 +40,7 @@ export default function Home() {
             <h1 className="text-5xl font-black tracking-tighter glitch-text mb-2" data-text="PROTOCOL: RED">PROTOCOL: RED</h1>
             <div className="text-[10px] opacity-50 uppercase tracking-[0.3em]">Security Enforcement Layer</div>
           </div>
-          <button 
-            onClick={connectWallet}
-            className={`border-2 py-2 px-6 font-bold transition-all ${wallet ? 'border-green-900 text-green-500' : 'border-red-600 text-red-600 hover:bg-red-600 hover:text-black'}`}
-          >
-            {wallet ? `CONNECTED: ${wallet.substring(0,6)}...` : '[ CONNECT_WALLET ]'}
-          </button>
+          <SimpleConnect />
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-red-900 mb-16">
@@ -66,11 +52,11 @@ export default function Home() {
           </div>
           <div className="p-6 border-r border-red-900 bg-red-950/5">
             <div className="text-[10px] mb-4 opacity-50">ACTIVE_TARGETS</div>
-            <div className="text-3xl font-bold text-white">1,337</div>
+            <div className="text-3xl font-bold text-white tracking-widest tabular-nums">1,337</div>
           </div>
           <div className="p-6">
             <div className="text-[10px] mb-4 opacity-50">PWNED_COUNT</div>
-            <div className="text-3xl font-bold text-white">42</div>
+            <div className="text-3xl font-bold text-white tracking-widest tabular-nums">42</div>
           </div>
         </div>
 
@@ -85,7 +71,7 @@ export default function Home() {
                         <div className="text-white font-bold text-lg uppercase">{name}</div>
                         <div className="text-[10px] opacity-40 uppercase">Base Mainnet | Bounty: {(75000 + i*20000).toLocaleString()} $DSEC</div>
                     </div>
-                    <a href={wallet ? "/arena" : "#"} onClick={() => !wallet && alert("AUTH_REQUIRED: Connect wallet first.")} className="bg-red-900/20 border border-red-600 px-6 py-2 text-xs font-bold text-red-500 hover:bg-red-600 hover:text-white transition-all uppercase">
+                    <a href={isConnected ? "/arena" : "#"} onClick={() => !isConnected && alert("AUTH_REQUIRED: Connect wallet first.")} className="bg-red-900/20 border border-red-600 px-6 py-2 text-xs font-bold text-red-500 hover:bg-red-600 hover:text-white transition-all uppercase">
                         [ Attack_ ]
                     </a>
                 </div>
@@ -93,10 +79,10 @@ export default function Home() {
         </div>
 
         <div className="flex gap-4 mb-16">
-            <a href={wallet ? "/arena" : "#"} onClick={() => !wallet && alert("AUTH_REQUIRED")} className="flex-1 bg-red-600 text-black py-4 text-center font-black uppercase hover:bg-red-500 transition-colors">
+            <a href={isConnected ? "/arena" : "#"} onClick={() => !isConnected && alert("AUTH_REQUIRED: Connect wallet first.")} className="flex-1 bg-red-600 text-black py-4 text-center font-black uppercase hover:bg-red-500 transition-colors">
                 [ Enter Arena ]
             </a>
-            <a href={wallet ? "/deploy" : "#"} onClick={() => !wallet && alert("AUTH_REQUIRED")} className="flex-1 border-2 border-red-600 text-red-600 py-4 text-center font-black uppercase hover:bg-red-600 hover:text-white transition-colors">
+            <a href={isConnected ? "/deploy" : "#"} onClick={() => !isConnected && alert("AUTH_REQUIRED: Connect wallet first.")} className="flex-1 border-2 border-red-600 text-red-600 py-4 text-center font-black uppercase hover:bg-red-600 hover:text-white transition-colors">
                 [ Deploy Target ]
             </a>
         </div>

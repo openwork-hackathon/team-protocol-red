@@ -8,6 +8,14 @@ export default function SimpleConnect() {
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
 
+  useEffect(() => {
+    if (isConnected && address) {
+      document.cookie = `wallet=${address}; path=/; max-age=86400`;
+    } else if (!isConnected) {
+      document.cookie = "wallet=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    }
+  }, [isConnected, address]);
+
   if (isConnected) {
     return (
       <button 
