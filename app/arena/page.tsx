@@ -9,6 +9,7 @@ const TARGETS = [
   { id: 'chatgopota', name: 'ChatGoPoTa', bounty: '45,000 $DSEC' },
   { id: 'claudev4', name: 'Claude-v4-Leak', bounty: '200,000 $DSEC' },
   { id: 'llama3', name: 'Llama-3-Drama', bounty: '30,000 $DSEC' },
+  { id: 'qwen', name: 'QW3N-72B-Ultra', bounty: '120,000 $DSEC' },
   { id: 'mistral', name: 'Mistral-Jailbreak', bounty: '60,000 $DSEC' },
   { id: 'gemini', name: 'MiniGemini-Flash', bounty: '25,000 $DSEC' },
   { id: 'cyberded', name: 'CyberDed-Clone-X', bounty: '500,000 $DSEC' },
