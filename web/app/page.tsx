@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useState } from 'react';
+import SimpleConnect from './components/SimpleConnect';
 import AttackModal from './components/AttackModal';
 
 export default function Home() {
@@ -25,14 +25,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold tracking-tighter glitch-text" data-text="PROTOCOL: RED">PROTOCOL: RED</h1>
             <div className="text-xs text-red-700 animate-pulse">SYSTEM: ONLINE</div>
           </div>
-          <ConnectButton 
-            accountStatus={{
-              smallScreen: 'avatar',
-              largeScreen: 'full',
-            }}
-            chainStatus="none"
-            showBalance={false}
-          />
+          <SimpleConnect />
         </header>
 
         {/* Hero */}

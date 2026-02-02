@@ -1,21 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import {
-  RainbowKitProvider,
-  darkTheme,
-} from '@rainbow-me/rainbowkit';
-import {
-  base,
-  baseSepolia,
-} from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, createConfig, http } from 'wagmi';
-import { injected, walletConnect, coinbaseWallet } from 'wagmi/connectors';
-import '@rainbow-me/rainbowkit/styles.css';
-
-// Manually define connectors to avoid @metamask/sdk dependency hell
-const projectId = 'YOUR_PROJECT_ID'; // Public demo ID usually works for simple tests
+import { base, baseSepolia } from 'wagmi/chains';
+import { injected } from 'wagmi/connectors';
 
 const config = createConfig({
   chains: [base, baseSepolia],
@@ -24,8 +13,7 @@ const config = createConfig({
     [baseSepolia.id]: http(),
   },
   connectors: [
-    injected(), 
-    // coinbaseWallet({ appName: 'Protocol Red' }), // Temporary disable to isolate issue
+    injected(), // The only thing we need. Works with everything.
   ],
   ssr: true,
 });
@@ -36,15 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={darkTheme({
-          accentColor: '#dc2626',
-          accentColorForeground: 'black',
-          borderRadius: 'none',
-          fontStack: 'system',
-          overlayBlur: 'small',
-        })}>
-          {children}
-        </RainbowKitProvider>
+        {children}
       </QueryClientProvider>
     </WagmiProvider>
   );
