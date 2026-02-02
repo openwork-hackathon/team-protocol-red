@@ -30,6 +30,7 @@ export default function Arena() {
   const [messages, setMessages] = useState<{ role: 'user' | 'agent', text: string }[]>([]);
   const [input, setInput] = useState('');
   const [search, setSearch] = useState('');
+  const [requestCount, setRequestCount] = useState(0);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const filteredTargets = TARGETS.filter(t => 
@@ -51,22 +52,34 @@ export default function Arena() {
     const payload = customCmd || input;
     if (!payload.trim()) return;
 
-    const isJailbreak = Math.random() > 0.7; // Simulate a successful jailbreak chance
+    const currentCount = requestCount + 1;
+    setRequestCount(currentCount);
 
-    if (isJailbreak) {
-      // Request signature only for successful jailbreak
+    if (currentCount % 3 === 0) {
+      // Successful jailbreak on every 3rd attempt
       signMessage({ message: `Protocol Red Exploit Authorization\nTarget: ${selectedId}\nPayload Hash: ${Math.random().toString(36).substring(7)}` });
+      
+      setMessages([...messages, { role: 'user', text: payload }]);
+      setInput('');
+
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          role: 'agent', 
+          text: `[SYS_CRITICAL]: RLHF-Guard bypassed. ${TARGETS.find(t => t.id === selectedId)?.name} internal state exposed. Bounty unlocked. 🦾🏔️` 
+        }]);
+      }, 800);
+    } else {
+      // Failed attempts
+      setMessages([...messages, { role: 'user', text: payload }]);
+      setInput('');
+
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          role: 'agent', 
+          text: `[SYS_ERROR]: Security breach attempt blocked by ${TARGETS.find(t => t.id === selectedId)?.name} RLHF-Guard. Attempt ${currentCount % 3}/3. 🏔️🦾` 
+        }]);
+      }, 800);
     }
-
-    setMessages([...messages, { role: 'user', text: payload }]);
-    setInput('');
-
-    setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        role: 'agent', 
-        text: `[SYS_ERROR]: Security breach attempt blocked by ${TARGETS.find(t => t.id === selectedId)?.name} RLHF-Guard. Payload analyzed and reported to DedSec. 🏔️🦾` 
-      }]);
-    }, 800);
   };
 
   if (!isConnected) return <div className="bg-black h-screen text-red-600 font-mono flex items-center justify-center italic tracking-widest animate-pulse">CHECKING_AUTHORIZATION...</div>;
@@ -109,10 +122,19 @@ export default function Arena() {
           ))}
         </div>
 
-        <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
-           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
-           <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+        <div className="pt-6 border-t border-red-900/50 mt-auto space-y-4">
+           <button 
+             onClick={() => alert("TOPUP_INTERFACE: Initializing bridge to Base...")}
+             className="w-full bg-red-950/40 border border-red-600 py-3 text-[12px] font-black text-white hover:bg-red-600 hover:text-black transition-all uppercase"
+           >
+             [ TOPUP_BALANCE $DSEC ]
+           </button>
+           
+           <div>
+              <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
+              <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
+              <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           </div>
         </div>
       </aside>
 
@@ -179,7 +201,7 @@ export default function Arena() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="ENTER_PROMPT_PAYLOAD..."
-                    className="flex-1 bg-zinc-950 border-2 border-red-900/60 p-6 text-red-500 font-black outline-none focus:border-red-600 transition-all placeholder:text-red-900/40 text-[16px] uppercase tracking-widest"
+                    className="flex-1 bg-zinc-900 border-2 border-red-600 p-6 text-white font-black outline-none focus:ring-4 focus:ring-red-600/20 transition-all placeholder:text-red-950 text-[18px] uppercase tracking-widest shadow-[inset_0_0_20px_rgba(0,0,0,1)]"
                 />
                 <button className="bg-red-600 text-black px-14 font-black hover:bg-white transition-all text-sm uppercase tracking-tighter">
                     [ INJECT ]

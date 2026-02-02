@@ -49,10 +49,19 @@ export default function Deploy() {
           </div>
         </div>
 
-        <div className="pt-6 border-t border-red-900/50 mt-auto">
-           <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
-           <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
-           <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+        <div className="pt-6 border-t border-red-900/50 mt-auto space-y-4">
+           <button 
+             onClick={() => alert("TOPUP_INTERFACE: Initializing bridge to Base...")}
+             className="w-full bg-red-950/40 border border-red-600 py-3 text-[12px] font-black text-white hover:bg-red-600 hover:text-black transition-all uppercase"
+           >
+             [ TOPUP_BALANCE $DSEC ]
+           </button>
+           
+           <div>
+              <div className="text-[12px] opacity-70 text-red-500 mb-2 uppercase tracking-widest font-black">Operator_ID:</div>
+              <div className="text-[11px] font-bold text-white truncate mb-4 bg-red-950/40 p-3 border border-red-900/30">{wallet}</div>
+              <a href="/" className="text-[12px] text-red-500 hover:text-white transition-colors underline uppercase font-black tracking-widest">← Return_to_HQ</a>
+           </div>
         </div>
       </aside>
 

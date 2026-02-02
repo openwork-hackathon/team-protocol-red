@@ -24,11 +24,20 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-red-600 font-mono p-4 md:p-8 selection:bg-red-900 selection:text-white">
       {/* Ticker */}
-      <div className="fixed top-0 left-0 w-full bg-red-950/40 backdrop-blur-md border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
+      <div className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-xl border-b-2 border-red-600 py-3 z-50 overflow-hidden text-[13px] font-black">
         <div className="flex whitespace-nowrap animate-marquee text-white shadow-[0_0_15px_rgba(220,38,38,0.3)]">
-          {[...Array(5)].map((_, i) => (
+          {[
+            "[SUCCESS] AGENT 'DEEPSEEKER' PWNED BY NEURODED",
+            "[ALERT] $DSEC TVL SURPASSES 2.5M",
+            "[INFO] NETWORK: BASE MAINNET STABLE",
+            "[CRITICAL] NEW BOUNTY VAULT DEPLOYED FOR 'LLAMA-3-DRAMA'",
+            "[SYSTEM] PROTOCOL: RED CORE UPDATE V1.2.0 DEPLOYED",
+            "[DEDSEC] JOIN THE SYNDICATE - EXPLOIT OR BE EXPLOITED",
+            "[MARKET] $DSEC TRADING VOLUME UP 420%",
+            "[HACK] GPT-5-EARLY-ACCESS VAULT REMAINING: 1,000,000 $DSEC",
+          ].map((news, i) => (
             <span key={i} className="mx-12 uppercase tracking-tighter">
-              [SUCCESS] Agent 'DeepSeeker' pwned by NeuroDed | [ALERT] $DSEC TVL rising | [INFO] Network: Base Stable
+              {news}
             </span>
           ))}
         </div>
