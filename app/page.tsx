@@ -2,10 +2,21 @@
 
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useState } from 'react';
+import AttackModal from './components/AttackModal';
 
 export default function Home() {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedTarget, setSelectedTarget] = useState('');
+
+  const openAttack = (name: string) => {
+    setSelectedTarget(name);
+    setModalOpen(true);
+  };
+
   return (
     <main className="min-h-screen bg-black text-red-500 font-mono p-8 selection:bg-red-900 selection:text-white">
+      <AttackModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} targetName={selectedTarget} />
       <div className="max-w-4xl mx-auto border border-red-900 p-8 shadow-[0_0_20px_rgba(220,38,38,0.3)]">
         
         {/* Header */}
@@ -66,7 +77,10 @@ export default function Home() {
               </div>
               <div className="text-right">
                 <div className="text-xs text-red-500 mb-1">STATUS: VULNERABLE</div>
-                <button className="bg-red-900/50 hover:bg-red-600 hover:text-black text-red-500 px-4 py-1 text-sm font-mono border border-red-700">
+                <button 
+                  onClick={() => openAttack("Agent Smith (Mock)")}
+                  className="bg-red-900/50 hover:bg-red-600 hover:text-black text-red-500 px-4 py-1 text-sm font-mono border border-red-700"
+                >
                   ATTACK_
                 </button>
               </div>
