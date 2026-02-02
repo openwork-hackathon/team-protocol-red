@@ -2,50 +2,32 @@
 
 import React, { useState, useEffect } from 'react';
 
-interface DigitProps {
-  value: string;
-}
-
-const Digit = ({ value }: DigitProps) => {
-  const [displayValue, setDisplayValue] = useState(value);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    if (value !== displayValue) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => {
-        setDisplayValue(value);
-        setIsAnimating(false);
-      }, 400);
-      return () => clearTimeout(timer);
-    }
-  }, [value, displayValue]);
-
+const Digit = ({ value }: { value: string }) => {
+  const num = parseInt(value);
+  
   return (
-    <span className="inline-block relative h-8 overflow-hidden w-[0.6em] text-center">
-      <span
-        className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-          isAnimating ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-        }`}
+    <span className="inline-block relative h-10 overflow-hidden w-[0.7em] text-center bg-black">
+      <div 
+        className="transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateY(-${(isNaN(num) ? 0 : num) * 10}%)` }}
       >
-        {displayValue}
-      </span>
-      {isAnimating && (
-        <span className="absolute inset-0 animate-slide-up text-red-400">
-          {value}
-        </span>
-      )}
+        {[0,1,2,3,4,5,6,7,8,9].map(n => (
+          <div key={n} className="h-10 flex items-center justify-center text-white font-black">
+            {n}
+          </div>
+        ))}
+      </div>
     </span>
   );
 };
 
 export default function SlotCounter({ value }: { value: number }) {
-  const digits = value.toLocaleString().split('');
+  const digits = value.toString().split('');
 
   return (
-    <div className="flex items-center tracking-tighter">
+    <div className="flex items-center tracking-tighter leading-none bg-black px-2 border-l-4 border-red-600">
       {digits.map((d, i) => (
-        d === ',' || d === ' ' ? <span key={i} className="mx-1">{d}</span> : <Digit key={i} value={d} />
+        isNaN(parseInt(d)) ? <span key={i} className="mx-0.5 text-red-600">{d}</span> : <Digit key={i} value={d} />
       ))}
     </div>
   );
