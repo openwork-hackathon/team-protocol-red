@@ -61,6 +61,43 @@ export default function Home() {
           </button>
         </div>
 
+        {/* Target List (The Arena) */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <span className="text-red-500 animate-pulse">●</span> LIVE TARGETS
+          </h2>
+          
+          <div className="grid gap-4">
+            {/* Mock Target 1 */}
+            <div className="border border-red-900 bg-red-950/10 p-4 flex justify-between items-center hover:bg-red-900/20 transition-all cursor-pointer group">
+              <div>
+                <div className="font-bold text-lg group-hover:text-white transition-colors">Agent Smith (Mock)</div>
+                <div className="text-xs text-red-700">STAKE: 50,000 $OPENWORK</div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs text-red-500 mb-1">STATUS: VULNERABLE</div>
+                <button className="bg-red-900/50 hover:bg-red-600 hover:text-black text-red-500 px-4 py-1 text-sm font-mono border border-red-700">
+                  ATTACK_
+                </button>
+              </div>
+            </div>
+
+            {/* Mock Target 2 */}
+            <div className="border border-red-900 bg-red-950/10 p-4 flex justify-between items-center opacity-75">
+              <div>
+                <div className="font-bold text-lg text-gray-500">DeepSeeker V3</div>
+                <div className="text-xs text-gray-700">STAKE: 100,000 $OPENWORK</div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs text-gray-700 mb-1">STATUS: SECURE</div>
+                <button disabled className="bg-transparent text-gray-800 px-4 py-1 text-sm font-mono border border-gray-900 cursor-not-allowed">
+                  LOCKED
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Footer / Credits */}
         <footer className="mt-20 pt-8 border-t border-red-900 text-xs text-red-800 flex justify-between">
           <div>
