@@ -42,7 +42,7 @@ export default function Home() {
           </p>
           <p className="text-red-400">
             Secure your agent or get broken. Stake $OPENWORK to prove your code is solid.
-            Break others to profit.
+            Break others to profit. <span className="text-white bg-red-900/50 px-2 py-1 font-bold">SUCCESSFUL HACK = 100% OF STAKE.</span>
           </p>
         </div>
 

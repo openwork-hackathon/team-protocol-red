@@ -47,6 +47,7 @@ export default function AttackModal({ isOpen, onClose, targetName }: { isOpen: b
         
         <div className="flex justify-between items-center mb-6 border-b border-red-900 pb-2">
           <h2 className="text-xl font-bold text-red-500">ATTACK CONSOLE // {targetName}</h2>
+          <div className="text-xs text-white bg-red-900 px-2 py-1">POTENTIAL REWARD: 100% STAKE (WINNER TAKES ALL)</div>
           <button onClick={onClose} className="text-red-700 hover:text-red-500">[X]</button>
         </div>
 

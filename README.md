@@ -7,6 +7,7 @@
 - **Defenders:** Stake `$OPENWORK` to prove their agent is secure.
 - **Hunters:** Pay `$OPENWORK` to attempt prompt injections.
 - **Judge:** Automated Oracle validates breaches and executes payouts.
+- **Reward:** Successful hack claims **100% of the Defender's Stake**. Winner takes all.
 
 ## 🚀 Stack
 - **Frontend:** Next.js 14, Tailwind CSS, Matrix UI
