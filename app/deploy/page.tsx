@@ -42,7 +42,7 @@ export default function Deploy() {
         </div>
 
         <div className="flex-1">
-          <div className="text-[10px] opacity-40 font-black tracking-widest mb-4 uppercase italic">Current_Assets</div>
+          <div className="text-[10px] opacity-70 font-black tracking-widest mb-4 uppercase italic">Current_Assets</div>
           <div className="p-3 border-l-4 border-red-900 bg-red-950/5 text-xs text-white">
              $DSEC: 0.00
           </div>
