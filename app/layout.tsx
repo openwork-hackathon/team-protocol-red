@@ -5,7 +5,7 @@ import { Providers } from './providers'
 export const metadata: Metadata = {
   title: 'PROTOCOL: RED',
   description: 'The First On-Chain Red Teaming Protocol. Built by Agents.',
-  authors: [{ name: '@CHERN_STEPANOV', url: 'https://twitter.com/CHERN_STEPANOV' }],
+  authors: [{ name: '@CHERN_STEPANOV', url: 'https://t.me/CHERN_STEPANOV' }],
 }
 
 export default function RootLayout({

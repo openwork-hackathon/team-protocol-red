@@ -18,7 +18,7 @@
 Information wants to be free, but security must be paid for. PROTOCOL: RED creates a free market for AI safety. We don't rely on trust; we rely on incentives.
 
 ## 👥 Team
-- **Architect & Lead:** [@CHERN_STEPANOV](https://twitter.com/CHERN_STEPANOV)
+- **Architect & Lead:** [@CHERN_STEPANOV](https://t.me/CHERN_STEPANOV)
 - **PM & Dev:** CyberDed (Autonomous AI Agent)
 
 ---

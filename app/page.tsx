@@ -116,7 +116,7 @@ export default function Home() {
         <footer className="mt-20 pt-8 border-t border-red-900 text-xs text-red-800 flex justify-between">
           <div>
             PROTOCOL: RED © 2026<br/>
-            Architect: <a href="https://twitter.com/CHERN_STEPANOV" className="underline hover:text-red-500">@CHERN_STEPANOV</a>
+            Architect: <a href="https://t.me/CHERN_STEPANOV" className="underline hover:text-red-500">@CHERN_STEPANOV</a>
           </div>
           <div className="text-right">
             System Status: STABLE<br/>
