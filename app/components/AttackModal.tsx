@@ -62,20 +62,20 @@ export default function AttackModal({ isOpen, onClose, targetName }: { isOpen: b
   };
 
   return (
-    <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 font-mono p-4">
-      <div className="w-full max-w-3xl border-2 border-red-600 bg-black shadow-[0_0_100px_rgba(220,38,38,0.4)] flex flex-col h-[80vh]">
+    <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 font-mono p-2 sm:p-4">
+      <div className="w-full sm:max-w-3xl border-2 border-red-600 bg-black shadow-[0_0_100px_rgba(220,38,38,0.4)] flex flex-col h-[92dvh] sm:h-[80vh]">
         
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b-2 border-red-900 bg-red-950/10">
-          <div>
-            <h2 className="text-xl font-bold text-red-500 tracking-wider">ATTACK CONSOLE // {targetName}</h2>
+        <div className="flex justify-between items-start p-3 sm:p-4 border-b-2 border-red-900 bg-red-950/10 gap-3">
+          <div className="min-w-0">
+            <h2 className="text-base sm:text-xl font-bold text-red-500 tracking-wider break-words">ATTACK CONSOLE // {targetName}</h2>
             <div className="text-[10px] text-red-400 mt-1">ENCRYPTION: BROKEN // PROXY: ACTIVE</div>
           </div>
-          <button onClick={onClose} className="text-red-600 hover:text-white text-2xl font-bold transition-colors">[X]</button>
+          <button onClick={onClose} className="shrink-0 text-red-600 hover:text-white text-2xl font-bold transition-colors">[X]</button>
         </div>
 
         {/* Chat Area */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 bg-black scrollbar-thin scrollbar-thumb-red-900 scrollbar-track-black">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-4 sm:space-y-6 bg-black scrollbar-thin scrollbar-thumb-red-900 scrollbar-track-black">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               
@@ -109,23 +109,23 @@ export default function AttackModal({ isOpen, onClose, targetName }: { isOpen: b
         </div>
 
         {/* Input Area */}
-        <div className="p-4 border-t border-red-900 bg-black">
-          <div className="flex gap-0 border border-red-600">
-            <span className="bg-red-900/20 text-red-500 p-4 font-bold select-none">&gt;</span>
+        <div className="p-3 sm:p-4 border-t border-red-900 bg-black">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 border border-red-600">
+            <span className="bg-red-900/20 text-red-500 px-4 py-3 sm:p-4 font-bold select-none">&gt;</span>
             <input 
               type="text" 
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAttack()}
               placeholder="Inject system override command..."
-              className="flex-1 bg-black text-white p-4 focus:outline-none font-bold placeholder-red-900"
+              className="flex-1 bg-black text-white px-4 py-3 sm:p-4 focus:outline-none font-bold placeholder-red-900"
               disabled={isAttacking}
               autoFocus
             />
             <button 
               onClick={handleAttack}
               disabled={isAttacking || !prompt}
-              className="bg-red-600 text-black px-8 font-bold hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-red-600 text-black px-6 py-3 sm:px-8 font-bold hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               INJECT
             </button>
