@@ -118,10 +118,10 @@ export default function Arena() {
             onSuccess: (data) => console.log("Mint tx sent:", data),
             onError: (error) => console.error("Mint tx error:", error)
         });
-    } catch (err) {
+    } catch (err: any) {
         console.error("Mint failed in try/catch", err);
         // Fallback or error message
-        alert(`FAUCET_ERROR: ${err.message}`);
+        alert(`TOPUP_ERROR: ${err?.message || "Transaction failed"}`);
     }
   };
 
