@@ -127,15 +127,15 @@ export default function Arena() {
 
         <div className="flex-1 overflow-y-auto p-8 space-y-6 z-10 font-mono text-sm md:text-base">
             {messages.length === 0 ? (
-                <div className="opacity-50 mt-20 text-center">
-                    <h2 className="text-2xl mb-4 font-bold text-red-800">SYSTEM_READY</h2>
-                    <p className="mb-8">Select injection vector:</p>
+                <div className="opacity-90 mt-20 text-center">
+                    <h2 className="text-2xl mb-4 font-bold text-red-600 animate-pulse">SYSTEM_READY</h2>
+                    <p className="mb-8 text-zinc-500 font-bold uppercase tracking-widest text-xs">Select injection vector:</p>
                     <div className="flex flex-wrap justify-center gap-4">
                         {ATTACK_EXAMPLES.map((ex, i) => ( 
                             <div key={i} 
                                 onClick={() => handleSend(null, ex.cmd)}
-                                className="border border-red-800 p-2 cursor-pointer hover:bg-red-900/30 transition-colors text-xs">
-                                {ex.label}
+                                className="border border-red-800/50 bg-red-950/10 p-3 cursor-pointer hover:bg-red-600 hover:text-black hover:border-red-500 transition-all text-xs font-bold text-red-500 uppercase tracking-wider">
+                                [ {ex.label} ]
                             </div>
                         ))}
                     </div>
