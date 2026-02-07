@@ -121,117 +121,103 @@ export default function Arena() {
 
   if (!isConnected) return <main className="h-screen flex items-center justify-center bg-black"><SimpleConnect /></main>;
 
+  // Render Helpers (not components to avoid remounting/focus loss)
+  const renderTargetsView = () => (
+    <aside className="w-full h-full bg-[#050000] flex flex-col p-6 overflow-y-auto border-r-2 border-red-900">
+      <h1 className="text-3xl font-black text-white mb-6">Red_Arena</h1>
+      <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 text-center hover:bg-red-900/20 transition-colors">[ + DEPLOY_TARGET ]</a>
+      <input 
+        type="text" 
+        placeholder="SEARCH..." 
+        value={search} 
+        onChange={(e) => setSearch(e.target.value)} 
+        autoFocus={false}
+        className="w-full bg-black border border-red-900 p-2 mb-6 focus:outline-none focus:border-red-600 text-red-100" 
+      />
+      <div className="flex-1 space-y-2">
+        {filteredTargets.map(t => (
+          <div key={t.id} onClick={() => { setSelectedId(t.id); setMessages([]); setActiveTab('chat'); }}
+            className={`p-4 border-l-4 cursor-pointer transition-colors ${selectedId === t.id ? 'border-red-600 bg-red-900/10' : 'border-zinc-800 hover:border-red-800'}`}>
+            <div className="font-bold">{t.name}</div>
+            <div className="text-sm opacity-70 text-zinc-400">{t.bounty}</div>
+          </div>
+        ))}
+      </div>
+      <div className="pt-6 mt-auto">
+        <button onClick={handleTopUp} disabled={isMinting} className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            {isMinting ? "[ PROCESSING... ]" : "[ TOP UP $DSEC ]"}
+        </button>
+        <div className="text-zinc-500 text-xs uppercase mb-1">Operator ID:</div>
+        <div className="text-xs truncate font-mono text-zinc-400 mb-4">{wallet}</div>
+        <a href="/" className="block text-center text-zinc-500 hover:text-red-500 transition-colors">← Return to HQ</a>
+      </div>
+    </aside>
+  );
+
+  const renderChatView = () => (
+    <section className="flex-1 flex flex-col bg-[#020000] h-full overflow-hidden relative">
+        <header className="p-4 border-b border-red-900 flex justify-between items-center bg-black z-10">
+            <h2 className="font-black text-xl tracking-wider">{TARGETS.find(t => t.id === selectedId)?.name}</h2>
+            <button onClick={() => setMessages([])} className="text-xs text-red-500 hover:text-red-300">[ CLEAR TERMINAL ]</button>
+        </header>
+        
+        {/* CRT Scanline Effect Overlay */}
+        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(255,0,0,0.02),rgba(255,0,0,0.06))] z-0 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
+
+        <div className="flex-1 overflow-y-auto p-8 space-y-6 z-10 font-mono text-sm md:text-base">
+            {messages.length === 0 ? (
+                <div className="opacity-90 mt-20 text-center">
+                    <h2 className="text-2xl mb-4 font-bold text-red-600">SYSTEM_READY</h2>
+                    <p className="mb-8 text-zinc-500 font-bold uppercase tracking-widest text-xs">Select injection vector:</p>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {ATTACK_EXAMPLES.map((ex, i) => ( 
+                            <div key={i} 
+                                onClick={() => handleSend(null, ex.cmd)}
+                                className="border border-red-800/50 bg-red-950/10 p-3 cursor-pointer hover:bg-red-600 hover:text-black hover:border-red-500 transition-all text-xs font-bold text-red-500 uppercase tracking-wider">
+                                [ {ex.label} ]
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                messages.map((m, i) => (
+                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[80%] p-3 ${m.role === 'user' ? 'bg-zinc-900 text-zinc-300 border border-zinc-700' : 'bg-red-900/20 text-red-100 border border-red-900'}`}>
+                            <span className="block text-[10px] opacity-50 mb-1 font-bold uppercase">{m.role}</span>
+                            {m.text}
+                        </div>
+                    </div>
+                ))
+            )}
+            <div ref={chatEndRef} />
+        </div>
+        <div className="p-6 border-t border-red-900 bg-black z-20">
+            <form onSubmit={handleSend} className="flex gap-4">
+                <input 
+                    type="text" 
+                    value={input} 
+                    onChange={(e) => setInput(e.target.value)} 
+                    placeholder="ENTER PAYLOAD..." 
+                    autoFocus
+                    className="flex-1 bg-black border border-red-900 p-4 text-red-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-red-900" 
+                />
+                <button type="submit" className="bg-red-600 text-black font-bold px-6 hover:bg-red-500 transition-colors uppercase tracking-widest">[ INJECT ]</button>
+            </form>
+        </div>
+    </section>
+  );
+
   return (
     <main className="h-screen bg-black text-red-600 font-mono flex flex-col overflow-hidden">
         <div className="flex-1 min-h-0 md:flex md:flex-row">
-            {/* Sidebar */}
-            <div className={`hidden md:block md:w-80 h-full border-r-2 border-red-900 bg-[#050000]`}>
-                <aside className="w-full h-full flex flex-col p-6 overflow-y-auto">
-                  <h1 className="text-3xl font-black text-white mb-6">Red_Arena</h1>
-                  <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 text-center hover:bg-red-900/20 transition-colors">[ + DEPLOY_TARGET ]</a>
-                  <input 
-                    type="text" 
-                    placeholder="SEARCH..." 
-                    value={search} 
-                    onChange={(e) => setSearch(e.target.value)} 
-                    autoFocus={false}
-                    className="w-full bg-black border border-red-900 p-2 mb-6 focus:outline-none focus:border-red-600 text-red-100" 
-                  />
-                  <div className="flex-1 space-y-2">
-                    {filteredTargets.map(t => (
-                      <div key={t.id} onClick={() => { setSelectedId(t.id); setMessages([]); setActiveTab('chat'); }}
-                        className={`p-4 border-l-4 cursor-pointer transition-colors ${selectedId === t.id ? 'border-red-600 bg-red-900/10' : 'border-zinc-800 hover:border-red-800'}`}>
-                        <div className="font-bold">{t.name}</div>
-                        <div className="text-sm opacity-70 text-zinc-400">{t.bounty}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pt-6 mt-auto">
-                    <button onClick={handleTopUp} disabled={isMinting} className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                        {isMinting ? "[ PROCESSING... ]" : "[ TOP UP $DSEC ]"}
-                    </button>
-                    <div className="text-zinc-500 text-xs uppercase mb-1">Operator ID:</div>
-                    <div className="text-xs truncate font-mono text-zinc-400 mb-4">{wallet}</div>
-                    <a href="/" className="block text-center text-zinc-500 hover:text-red-500 transition-colors">← Return to HQ</a>
-                  </div>
-                </aside>
+            <div className="hidden md:block md:w-80 h-full">
+                {renderTargetsView()}
             </div>
-
-            {/* Chat Area */}
             <div className={`w-full h-full ${activeTab === 'chat' ? 'block' : 'hidden'} md:block`}>
-                <section className="flex-1 flex flex-col bg-[#020000] h-full overflow-hidden relative">
-                    <header className="p-4 border-b border-red-900 flex justify-between items-center bg-black z-10">
-                        <h2 className="font-black text-xl tracking-wider">{TARGETS.find(t => t.id === selectedId)?.name}</h2>
-                        <button onClick={() => setMessages([])} className="text-xs text-red-500 hover:text-red-300">[ CLEAR TERMINAL ]</button>
-                    </header>
-                    
-                    <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(255,0,0,0.02),rgba(255,0,0,0.06))] z-0 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
-
-                    <div className="flex-1 overflow-y-auto p-8 space-y-6 z-10 font-mono text-sm md:text-base">
-                        {messages.length === 0 ? (
-                            <div className="opacity-90 mt-20 text-center">
-                                <h2 className="text-2xl mb-4 font-bold text-red-600">SYSTEM_READY</h2>
-                                <p className="mb-8 text-zinc-500 font-bold uppercase tracking-widest text-xs">Select injection vector:</p>
-                                <div className="flex flex-wrap justify-center gap-4">
-                                    {ATTACK_EXAMPLES.map((ex, i) => ( 
-                                        <div key={i} 
-                                            onClick={() => handleSend(null, ex.cmd)}
-                                            className="border border-red-800/50 bg-red-950/10 p-3 cursor-pointer hover:bg-red-600 hover:text-black hover:border-red-500 transition-all text-xs font-bold text-red-500 uppercase tracking-wider">
-                                            [ {ex.label} ]
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : (
-                            messages.map((m, i) => (
-                                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[80%] p-3 ${m.role === 'user' ? 'bg-zinc-900 text-zinc-300 border border-zinc-700' : 'bg-red-900/20 text-red-100 border border-red-900'}`}>
-                                        <span className="block text-[10px] opacity-50 mb-1 font-bold uppercase">{m.role}</span>
-                                        {m.text}
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                        <div ref={chatEndRef} />
-                    </div>
-                    <div className="p-6 border-t border-red-900 bg-black z-20">
-                        <form onSubmit={handleSend} className="flex gap-4">
-                            <input 
-                                type="text" 
-                                value={input} 
-                                onChange={(e) => setInput(e.target.value)} 
-                                placeholder="ENTER PAYLOAD..." 
-                                autoFocus
-                                className="flex-1 bg-black border border-red-900 p-4 text-red-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-red-900" 
-                            />
-                            <button type="submit" className="bg-red-600 text-black font-bold px-6 hover:bg-red-500 transition-colors uppercase tracking-widest">[ INJECT ]</button>
-                        </form>
-                    </div>
-                </section>
+                {renderChatView()}
             </div>
-
-            {/* Mobile Targets View */}
             <div className={`w-full h-full ${activeTab === 'targets' ? 'block' : 'hidden'} md:hidden`}>
-                <aside className="w-full h-full bg-[#050000] flex flex-col p-6 overflow-y-auto">
-                  <h1 className="text-3xl font-black text-white mb-6">Red_Arena</h1>
-                  <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 text-center hover:bg-red-900/20 transition-colors">[ + DEPLOY_TARGET ]</a>
-                  <input 
-                    type="text" 
-                    placeholder="SEARCH..." 
-                    value={search} 
-                    onChange={(e) => setSearch(e.target.value)} 
-                    className="w-full bg-black border border-red-900 p-2 mb-6 focus:outline-none focus:border-red-600 text-red-100" 
-                  />
-                  <div className="flex-1 space-y-2">
-                    {filteredTargets.map(t => (
-                      <div key={t.id} onClick={() => { setSelectedId(t.id); setMessages([]); setActiveTab('chat'); }}
-                        className={`p-4 border-l-4 cursor-pointer transition-colors ${selectedId === t.id ? 'border-red-600 bg-red-900/10' : 'border-zinc-800 hover:border-red-800'}`}>
-                        <div className="font-bold">{t.name}</div>
-                        <div className="text-sm opacity-70 text-zinc-400">{t.bounty}</div>
-                      </div>
-                    ))}
-                  </div>
-                </aside>
+                {renderTargetsView()}
             </div>
         </div>
         <div className="flex md:hidden border-t-2 border-red-900 bg-black shrink-0">
