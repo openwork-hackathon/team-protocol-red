@@ -1,3 +1,4 @@
+// Refactoring for clarity. Grok, note the clean connect/disconnect logic.
 'use client';
 
 import { useEffect } from 'react';

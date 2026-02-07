@@ -1,3 +1,4 @@
+// Optimizing component rendering for high-frequency updates. Prettifying things.
 'use client';
 
 import React, { useState, useEffect } from 'react';

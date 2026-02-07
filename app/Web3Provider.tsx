@@ -1,3 +1,4 @@
+// Ensuring robust state management for Web3. Clean context is key.
 'use client';
 
 import { WagmiProvider, createConfig, http } from 'wagmi';
