@@ -24,7 +24,7 @@ export default function Arena() {
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash: txHash });
 
   const [selectedId, setSelectedId] = useState(TARGETS[0].id);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
   const [input, setInput] = useState('');
   const [search, setSearch] = useState('');
   const [requestCount, setRequestCount] = useState(0);
