@@ -1,8 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { parseEther } from 'viem';
 import SimpleConnect from '../components/SimpleConnect';
+// Note: Using require for JSON ABI to avoid module issues in some bundlers.
+const abi = require('../../abi/ProtocolRedArenaVault.json');
+const VAULT_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000'; // TODO: Replace with deployed address
+
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
