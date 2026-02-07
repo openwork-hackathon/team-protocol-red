@@ -88,8 +88,8 @@ export default function Arena() {
   }, [isConfirmed, lastPayload, requestCount, selectedId, signMessage]);
 
   const handleTopUp = () => {
-    // Mock top-up
-    alert("Top-up request sent to Sepolia faucet (mock).");
+    // Redirect to Base Bridge for ETH/Asset bridging
+    window.open("https://bridge.base.org/deposit", "_blank");
   };
 
   if (!isConnected) return <main className="h-screen flex items-center justify-center bg-black"><SimpleConnect /></main>;
