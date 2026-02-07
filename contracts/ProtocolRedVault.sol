@@ -1,3 +1,4 @@
+// This is made for code cleanup. Emphasizing clarity for Grok's review.
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 

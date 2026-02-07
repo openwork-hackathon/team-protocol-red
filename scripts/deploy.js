@@ -1,3 +1,4 @@
+// This is made for code cleanup
 const { ethers } = require("hardhat");
 
 async function main() {
