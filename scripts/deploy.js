@@ -1,36 +1,38 @@
-const hre = require("hardhat");
+const { ethers } = require("hardhat");
 
 async function main() {
-  console.log("Deploying contracts to", hre.network.name);
+  const [deployer] = await ethers.getSigners();
 
-  // 1. Deploy Mock Token (OPENWORK) - only for Testnet!
-  let tokenAddress;
-  if (hre.network.name === "baseSepolia" || hre.network.name === "localhost") {
-    console.log("Deploying Mock Token...");
-    const Token = await hre.ethers.getContractFactory("MockToken");
-    const mockToken = await Token.deploy();
-    await mockToken.waitForDeployment();
-    tokenAddress = mockToken.target;
-    console.log("MockToken deployed to:", tokenAddress);
-  } else {
-    tokenAddress = "0x299c30DD5974BF4D5bFE42C340CA40462816AB07"; // Mainnet
-  }
-
-  // 2. Deploy BountyVault
-  const [deployer] = await hre.ethers.getSigners();
-  const oracleAddress = deployer.address; // Currently deployer is oracle
+  console.log("Deploying contracts with the account:", deployer.address);
   
-  console.log("Deploying Vault...");
-  const Vault = await hre.ethers.getContractFactory("BountyVault");
-  const vault = await Vault.deploy(tokenAddress, oracleAddress);
+  // Адреса для конструктора (заменить на реальные)
+  const bountyTokenAddress = "0x0000000000000000000000000000000000000000"; // TODO: Deploy mock token or use existing
+  const oracleAddress = deployer.address; // Используем адрес деплоера как временный оракул
+
+  console.log("Deploying MockERC20 (for Bounty)...");
+  const MockToken = await ethers.getContractFactory("MockERC20");
+  const bountyToken = await MockToken.deploy("Protocol Red Token", "DSEC");
+  await bountyToken.waitForDeployment();
+  console.log("MockERC20 deployed to:", await bountyToken.getAddress());
+  
+  console.log("\nDeploying ProtocolRedArenaVault...");
+  const Vault = await ethers.getContractFactory("ProtocolRedArenaVault");
+  const vault = await Vault.deploy(await bountyToken.getAddress(), oracleAddress);
   await vault.waitForDeployment();
 
-  console.log("BountyVault deployed to:", vault.target);
-  console.log("Token:", token);
-  console.log("Oracle:", oracleAddress);
+  console.log("ProtocolRedArenaVault deployed to:", await vault.getAddress());
+
+  // Минтим тестовые токены и пополняем контракт
+  const initialBounty = ethers.parseEther("1000000");
+  console.log(`\nMinting ${ethers.formatEther(initialBounty)} DSEC for the vault...`);
+  await bountyToken.mint(await vault.getAddress(), initialBounty);
+  console.log("Vault funded successfully.");
+  console.log("Vault balance:", ethers.formatEther(await bountyToken.balanceOf(await vault.getAddress())));
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
