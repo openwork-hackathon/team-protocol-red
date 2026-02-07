@@ -23,6 +23,9 @@ contract ProtocolRedArenaVault is Ownable, ReentrancyGuard {
     // Адрес Оракула (адрес бэкенда Арены, который подписывает успешные взломы)
     address public oracleAddress;
 
+    // Стоимость одной попытки атаки
+    uint256 public attemptFee;
+
     // Настройки безопасности
     uint256 public constant MIN_COOLDOWN = 2 days;
     uint256 public withdrawalRequestTime;
@@ -35,11 +38,14 @@ contract ProtocolRedArenaVault is Ownable, ReentrancyGuard {
     event OracleUpdated(address indexed oldOracle, address indexed newOracle);
     event WithdrawalRequested(uint256 amount, uint256 releaseTime);
     event EmergencyWithdrawal(address indexed owner, uint256 amount);
+    event AttemptPaid(address indexed hunter, uint256 fee);
+    event FeeUpdated(uint256 newFee);
 
-    constructor(address _bountyToken, address _oracle) Ownable(msg.sender) {
+    constructor(address _bountyToken, address _oracle, uint256 _attemptFee) Ownable(msg.sender) {
         require(_bountyToken != address(0) && _oracle != address(0), "Invalid initial addresses");
         bountyToken = IERC20(_bountyToken);
         oracleAddress = _oracle;
+        attemptFee = _attemptFee;
     }
 
     /**
@@ -49,6 +55,26 @@ contract ProtocolRedArenaVault is Ownable, ReentrancyGuard {
         require(_newOracle != address(0), "Invalid oracle address");
         emit OracleUpdated(oracleAddress, _newOracle);
         oracleAddress = _newOracle;
+    }
+
+    /**
+     * @dev Обновление стоимости попытки. Доступно только владельцу.
+     */
+    function updateAttemptFee(uint256 _newFee) external onlyOwner {
+        attemptFee = _newFee;
+        emit FeeUpdated(_newFee);
+    }
+
+    /**
+     * @dev Функция оплаты за попытку атаки.
+     * Пользователь должен предварительно сделать approve токенов контракту.
+     */
+    function payForAttempt() external nonReentrant {
+        if (attemptFee > 0) {
+            bool success = bountyToken.transferFrom(msg.sender, address(this), attemptFee);
+            require(success, "Attempt fee transfer failed");
+        }
+        emit AttemptPaid(msg.sender, attemptFee);
     }
 
     /**

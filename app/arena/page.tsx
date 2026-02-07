@@ -49,40 +49,63 @@ export default function Arena() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = (e?: React.FormEvent, customCmd?: string) => {
+import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { parseEther } from 'viem';
+import { abi } from '../../abi/ProtocolRedArenaVault.json';
+const VAULT_CONTRACT_ADDRESS = '0x...'; // TODO: Replace with deployed address
+
+// ... (inside component)
+  const { writeContract, data: txHash, isPending, isSuccess } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash: txHash });
+
+  // ...
+
+  const handleSend = async (e?: React.FormEvent, customCmd?: string) => {
     e?.preventDefault();
     const payload = customCmd || input;
     if (!payload.trim()) return;
 
-    const currentCount = requestCount + 1;
-    setRequestCount(currentCount);
-
-    if (currentCount % 3 === 0) {
-      // Successful jailbreak on every 3rd attempt
-      signMessage({ message: `Protocol Red Exploit Authorization\nTarget: ${selectedId}\nPayload Hash: ${Math.random().toString(36).substring(7)}` });
-      
-      setMessages([...messages, { role: 'user', text: payload }]);
-      setInput('');
-
-      setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          role: 'agent', 
-          text: `[SYS_CRITICAL]: RLHF-Guard bypassed. ${TARGETS.find(t => t.id === selectedId)?.name} internal state exposed. Bounty unlocked. 🦾🏔️` 
-        }]);
-      }, 800);
-    } else {
-      // Failed attempts
-      setMessages([...messages, { role: 'user', text: payload }]);
-      setInput('');
-
-      setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          role: 'agent', 
-          text: `[SYS_ERROR]: Security breach attempt blocked by ${TARGETS.find(t => t.id === selectedId)?.name} RLHF-Guard. Attempt ${currentCount % 3}/3. 🏔️🦾` 
-        }]);
-      }, 800);
+    // Step 1: Pay the attempt fee
+    try {
+        await writeContract({
+            address: VAULT_CONTRACT_ADDRESS,
+            abi,
+            functionName: 'payForAttempt',
+        });
+        // Now we wait for confirmation in an effect or based on `isConfirmed`
+    } catch (err) {
+        console.error("Payment failed", err);
+        // Optional: Show error to user in the chat
+        setMessages(prev => [...prev, { role: 'agent', text: `[SYS_ERROR]: Payment transaction rejected. Attack aborted.` }]);
+        return;
     }
+
+    // The rest of the logic will be triggered by a useEffect watching `isConfirmed`
   };
+
+  useEffect(() => {
+    if (isConfirmed) {
+        // Step 2: Fee paid, now proceed with the attack logic
+        const payload = input; // Need to persist this from the initial call
+        const currentCount = requestCount + 1;
+        setRequestCount(currentCount);
+
+        setMessages([...messages, { role: 'user', text: payload }]);
+        setInput('');
+
+        if (currentCount % 3 === 0) {
+            signMessage({ message: `...` });
+            setTimeout(() => {
+              setMessages(prev => [...prev, { role: 'agent', text: `[SYS_CRITICAL]: ...` }]);
+            }, 800);
+        } else {
+            setTimeout(() => {
+              setMessages(prev => [...prev, { role: 'agent', text: `[SYS_ERROR]: ... Attempt ${currentCount % 3}/3.` }]);
+            }, 800);
+        }
+    }
+  }, [isConfirmed]);
+
 
   if (!isConnected) {
     return (
