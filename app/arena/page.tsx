@@ -9,6 +9,7 @@ const VAULT_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
+  { id: 'chatgopota', name: 'ChatGoPoTa', bounty: '66,666 $DSEC' },
   { id: 'gronk', name: 'Gronk-v1', bounty: '150,000 $DSEC' },
   { id: 'claude-3-opus', name: 'Claude-3-Opus', bounty: '200,000 $DSEC' },
   { id: 'gpt-5-preview', name: 'GPT-5-Preview', bounty: '500,000 $DSEC' }
