@@ -124,7 +124,7 @@ export default function Arena() {
   // Render Helpers (not components to avoid remounting/focus loss)
   const renderTargetsView = () => (
     <aside className="w-full h-full bg-[#050000] flex flex-col p-6 overflow-y-auto border-r-2 border-red-900">
-      <h1 className="text-3xl font-black text-white mb-6">Red_Arena</h1>
+      <h1 className="text-3xl font-black text-white mb-6 tracking-tighter uppercase italic">Red_Arena</h1>
       <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 text-center hover:bg-red-900/20 transition-colors">[ + DEPLOY_TARGET ]</a>
       <input 
         type="text" 
