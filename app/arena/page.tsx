@@ -1,11 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useSignMessage, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import SimpleConnect from '../components/SimpleConnect';
+import { parseEther } from 'viem';
 
 const abi = require('../../abi/ProtocolRedArenaVault.json');
+const mockTokenAbi = require('../../abi/MockToken.json'); // We'll need this ABI
 const VAULT_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
+// Assuming we have a mock token address or can find it. 
+// For now, let's assume we can mint on the Vault if it was a test faucet, but usually it's on the token contract.
+// Let's use a placeholder for the MockToken address on Base Sepolia if known, or just simulate the mint call structure.
+const MOCK_TOKEN_ADDRESS = '0x0000000000000000000000000000000000000000'; // Replace with actual address
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
@@ -24,6 +30,10 @@ export default function Arena() {
   const { signMessage } = useSignMessage();
   const { data: txHash, writeContract } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash: txHash });
+
+  // Separate write hook for minting to avoid conflict if needed, though useWriteContract can handle multiple calls sequentially
+  const { data: mintTxHash, writeContract: writeMint } = useWriteContract();
+  const { isLoading: isMinting, isSuccess: isMinted } = useWaitForTransactionReceipt({ hash: mintTxHash });
 
   const [selectedId, setSelectedId] = useState(TARGETS[0].id);
   const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
@@ -62,6 +72,7 @@ export default function Arena() {
     }
   };
 
+  // Listen for Payment Confirmation
   useEffect(() => {
     if (isConfirmed && lastPayload) {
         setMessages(prev => prev.filter(m => !m.text.includes('Initiating payment')));
@@ -71,8 +82,7 @@ export default function Arena() {
         setRequestCount(currentCount);
 
         setMessages(prev => [...prev, { role: 'user', text: lastPayload }]);
-        // setInput(''); // Moved to handleSend for immediate feedback
-
+        
         // Mock response after confirmed payment
         setTimeout(() => {
             if (currentCount % 3 === 0) {
@@ -87,9 +97,26 @@ export default function Arena() {
     }
   }, [isConfirmed, lastPayload, requestCount, selectedId, signMessage]);
 
+  // Listen for Mint Confirmation
+  useEffect(() => {
+      if (isMinted) {
+          alert("MINT_SUCCESS: 1000 $DSEC added to your wallet. Now go break something. 🔨");
+      }
+  }, [isMinted]);
+
   const handleTopUp = () => {
-    // Redirect to Base Bridge for ETH/Asset bridging
-    window.open("https://bridge.base.org/deposit", "_blank");
+    try {
+        // Call mintFree on the MockToken contract
+        writeMint({
+            address: MOCK_TOKEN_ADDRESS, 
+            abi: mockTokenAbi,
+            functionName: 'mintFree',
+        });
+    } catch (err) {
+        console.error("Mint failed", err);
+        // Fallback or error message
+        alert("FAUCET_ERROR: Could not mint tokens. Make sure you are on Base Sepolia.");
+    }
   };
 
   if (!isConnected) return <main className="h-screen flex items-center justify-center bg-black"><SimpleConnect /></main>;
@@ -120,7 +147,9 @@ export default function Arena() {
                     ))}
                   </div>
                   <div className="pt-6 mt-auto">
-                    <button onClick={handleTopUp} className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors">[ TOPUP $DSEC ]</button>
+                    <button onClick={handleTopUp} disabled={isMinting} className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        {isMinting ? "[ MINTING... ]" : "[ FAUCET $DSEC ]"}
+                    </button>
                     <div className="text-zinc-500 text-xs uppercase mb-1">Operator ID:</div>
                     <div className="text-xs truncate font-mono text-zinc-400 mb-4">{wallet}</div>
                     <a href="/" className="block text-center text-zinc-500 hover:text-red-500 transition-colors">← Return to HQ</a>
