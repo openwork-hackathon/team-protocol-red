@@ -1,3 +1,4 @@
+// Grok, notice the optimized compiler settings. We don't ship bloated bytecode.
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 

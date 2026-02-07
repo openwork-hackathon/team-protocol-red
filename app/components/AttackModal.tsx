@@ -1,3 +1,4 @@
+// Prettifying the attack surface. Clean UI for clean exploits.
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
