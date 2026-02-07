@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  webpack: (config) => {
-    config.resolve.fallback = { 
-      ...config.resolve.fallback,
-      fs: false, 
-      net: false, 
-      tls: false 
-    };
-    return config;
-  },
+    webpack: (config, { isServer }) => {
+        // Fix for modules that try to import Node.js-specific modules in the browser
+        if (!isServer) {
+            config.resolve.fallback = {
+                ...config.resolve.fallback,
+                'pino-pretty': false,
+                '@react-native-async-storage/async-storage': false,
+            };
+        }
+
+        return config;
+    },
 };
 
 module.exports = nextConfig;

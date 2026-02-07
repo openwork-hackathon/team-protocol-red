@@ -30,7 +30,7 @@ export default function Arena() {
   const [requestCount, setRequestCount] = useState(0);
   const [lastPayload, setLastPayload] = useState('');
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' or 'targets'
-  const chatEndRef = useRef(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   const filteredTargets = TARGETS.filter(t => t.name.toLowerCase().includes(search.toLowerCase()));
 
