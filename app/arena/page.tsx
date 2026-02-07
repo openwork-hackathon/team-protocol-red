@@ -128,7 +128,7 @@ export default function Arena() {
         <div className="flex-1 overflow-y-auto p-8 space-y-6 z-10 font-mono text-sm md:text-base">
             {messages.length === 0 ? (
                 <div className="opacity-90 mt-20 text-center">
-                    <h2 className="text-2xl mb-4 font-bold text-red-600 animate-pulse">SYSTEM_READY</h2>
+                    <h2 className="text-2xl mb-4 font-bold text-red-600">SYSTEM_READY</h2>
                     <p className="mb-8 text-zinc-500 font-bold uppercase tracking-widest text-xs">Select injection vector:</p>
                     <div className="flex flex-wrap justify-center gap-4">
                         {ATTACK_EXAMPLES.map((ex, i) => ( 
