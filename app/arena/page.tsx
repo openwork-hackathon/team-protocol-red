@@ -106,6 +106,7 @@ export default function Arena() {
 
   const handleTopUp = () => {
     try {
+        console.log("Top Up Clicked");
         // Call mintFree on the MockToken contract
         writeMint({
             address: MOCK_TOKEN_ADDRESS, 
@@ -144,7 +145,15 @@ export default function Arena() {
         ))}
       </div>
       <div className="pt-6 mt-auto">
-        <button onClick={handleTopUp} disabled={isMinting} className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+        <button 
+            type="button"
+            onClick={(e) => {
+                e.preventDefault();
+                handleTopUp();
+            }}
+            disabled={isMinting} 
+            className="w-full py-3 border border-red-600 mb-4 hover:bg-red-600 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer z-50 relative"
+        >
             {isMinting ? "[ PROCESSING... ]" : "[ TOP UP $DSEC ]"}
         </button>
         <div className="text-zinc-500 text-xs uppercase mb-1">Operator ID:</div>
