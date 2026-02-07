@@ -38,7 +38,7 @@ export default function Arena() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
-  const handleSend = async (e, customCmd) => {
+  const handleSend = async (e?: React.FormEvent | null, customCmd?: string) => {
     e?.preventDefault();
     const payload = customCmd || input;
     if (!payload.trim()) return;
