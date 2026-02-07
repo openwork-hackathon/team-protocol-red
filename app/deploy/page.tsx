@@ -134,7 +134,7 @@ export default function Deploy() {
                     </div>
 
                     <div className="space-y-2 group">
-                        <label className="text-[10px] font-bold text-red-500 uppercase tracking-widest group-focus-within:text-red-400 transition-colors">Bounty Stake ($OPENWORK)</label>
+                        <label className="text-[10px] font-bold text-red-500 uppercase tracking-widest group-focus-within:text-red-400 transition-colors">Bounty Stake ($DSEC)</label>
                         <div className="relative">
                             <input 
                                 type="number" 
@@ -142,7 +142,7 @@ export default function Deploy() {
                                 onChange={(e) => setStake(e.target.value)}
                                 className="w-full bg-zinc-950/50 border border-red-900/50 p-4 text-white font-mono outline-none focus:border-red-500 focus:bg-red-950/10 transition-all text-sm placeholder-zinc-700 pr-16"
                             />
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-500 pointer-events-none">OW</div>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-500 pointer-events-none">DSEC</div>
                         </div>
                     </div>
 
