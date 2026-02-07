@@ -11,7 +11,7 @@ const VAULT_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
 // Assuming we have a mock token address or can find it. 
 // For now, let's assume we can mint on the Vault if it was a test faucet, but usually it's on the token contract.
 // Let's use a placeholder for the MockToken address on Base Sepolia if known, or just simulate the mint call structure.
-const MOCK_TOKEN_ADDRESS = '0x0000000000000000000000000000000000000000'; // Replace with actual address
+const MOCK_TOKEN_ADDRESS = '0x6262bCC6Cd66Ac041EfeA3d18831309E7b4902Bd'; // Replace with actual address
 
 const TARGETS = [
   { id: 'deepseeker', name: 'DeepSeeker-V3', bounty: '75,000 $DSEC' },
