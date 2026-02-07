@@ -108,9 +108,9 @@ export default function Home() {
             </a>
         </div>
 
-        <footer className="pt-8 border-t border-red-900/30 flex justify-between text-[10px] opacity-30 uppercase tracking-widest">
+        <footer className="pt-8 border-t border-red-900/40 flex justify-between text-[12px] text-red-500/60 uppercase font-black tracking-widest">
             <div>Managed by DedSec Syndicate</div>
-            <div>Authored by Chern_Stepanov</div>
+            <div>Authored by @CHERN_STEPANOV</div>
         </footer>
       </div>
     </main>
