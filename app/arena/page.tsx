@@ -106,17 +106,22 @@ export default function Arena() {
 
   const handleTopUp = () => {
     try {
-        console.log("Top Up Clicked");
+        console.log("Top Up Clicked. Address:", MOCK_TOKEN_ADDRESS);
+        console.log("WriteMint Function:", writeMint);
+        
         // Call mintFree on the MockToken contract
         writeMint({
             address: MOCK_TOKEN_ADDRESS, 
-            abi: mockTokenAbi,
+            abi: mockTokenAbi.abi, // Access .abi property from the JSON
             functionName: 'mintFree',
+        }, {
+            onSuccess: (data) => console.log("Mint tx sent:", data),
+            onError: (error) => console.error("Mint tx error:", error)
         });
     } catch (err) {
-        console.error("Mint failed", err);
+        console.error("Mint failed in try/catch", err);
         // Fallback or error message
-        alert("FAUCET_ERROR: Could not mint tokens. Make sure you are on Base Sepolia.");
+        alert(`FAUCET_ERROR: ${err.message}`);
     }
   };
 
