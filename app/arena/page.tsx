@@ -44,7 +44,10 @@ export default function Arena() {
     e?.preventDefault();
     const payload = customCmd || input;
     if (!payload.trim()) return;
+    
     setLastPayload(payload);
+    setInput(''); // Clear input immediately for better UX
+
     try {
         setMessages(prev => [...prev, { role: 'agent', text: `[SYSTEM]: Initiating payment...`}]);
         
@@ -68,7 +71,7 @@ export default function Arena() {
         setRequestCount(currentCount);
 
         setMessages(prev => [...prev, { role: 'user', text: lastPayload }]);
-        setInput('');
+        // setInput(''); // Moved to handleSend for immediate feedback
 
         // Mock response after confirmed payment
         setTimeout(() => {
