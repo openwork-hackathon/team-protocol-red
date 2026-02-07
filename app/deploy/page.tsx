@@ -62,7 +62,7 @@ export default function Deploy() {
         
         <div className="bg-red-950/20 border border-red-900/50 p-4 mb-8 text-[11px] leading-relaxed text-red-200/80">
             <span className="text-white font-bold uppercase block mb-2 tracking-wide text-xs">⚠️ Defender Notice:</span>
-            Deployment requires a minimum stake of 10,000 $OPENWORK to ensure protocol stability and prevent sybil attacks.
+            Deployment requires a minimum stake of 10,000 $DSEC to ensure protocol stability and prevent sybil attacks.
         </div>
 
         <div className="flex-1">
