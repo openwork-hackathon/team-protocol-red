@@ -86,7 +86,7 @@ export default function Arena() {
     alert("Top-up request sent to Sepolia faucet (mock).");
   };
 
-  const TargetsView = () => (
+  const TargetsView = React.memo(() => (
     <aside className="w-full h-full bg-[#050000] flex flex-col p-6 overflow-y-auto border-r-2 border-red-900">
       <h1 className="text-3xl font-black text-white mb-6">Red_Arena</h1>
       <a href="/deploy" className="mb-6 border-2 border-red-600 py-3 text-center hover:bg-red-900/20 transition-colors">[ + DEPLOY_TARGET ]</a>
@@ -95,6 +95,7 @@ export default function Arena() {
         placeholder="SEARCH..." 
         value={search} 
         onChange={(e) => setSearch(e.target.value)} 
+        autoFocus={false}
         className="w-full bg-black border border-red-900 p-2 mb-6 focus:outline-none focus:border-red-600 text-red-100" 
       />
       <div className="flex-1 space-y-2">
@@ -113,9 +114,9 @@ export default function Arena() {
         <a href="/" className="block text-center text-zinc-500 hover:text-red-500 transition-colors">← Return to HQ</a>
       </div>
     </aside>
-  );
+  ));
 
-  const ChatView = () => (
+  const ChatView = React.memo(() => (
     <section className="flex-1 flex flex-col bg-[#020000] h-full overflow-hidden relative">
         <header className="p-4 border-b border-red-900 flex justify-between items-center bg-black z-10">
             <h2 className="font-black text-xl tracking-wider">{TARGETS.find(t => t.id === selectedId)?.name}</h2>
@@ -159,13 +160,16 @@ export default function Arena() {
                     value={input} 
                     onChange={(e) => setInput(e.target.value)} 
                     placeholder="ENTER PAYLOAD..." 
+                    autoFocus
                     className="flex-1 bg-black border border-red-900 p-4 text-red-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-red-900" 
                 />
-                <button className="bg-red-600 text-black font-bold px-6 hover:bg-red-500 transition-colors uppercase tracking-widest">[ INJECT ]</button>
+                <button type="submit" className="bg-red-600 text-black font-bold px-6 hover:bg-red-500 transition-colors uppercase tracking-widest">[ INJECT ]</button>
             </form>
         </div>
     </section>
-  );
+  ));
+  TargetsView.displayName = 'TargetsView';
+  ChatView.displayName = 'ChatView';
 
   if (!isConnected) return <main className="h-screen flex items-center justify-center bg-black"><SimpleConnect /></main>;
 
