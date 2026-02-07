@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Providers } from './providers'
+import { Web3Provider } from './Web3Provider'
 
 export const metadata: Metadata = {
   title: 'PROTOCOL: RED',
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Web3Provider>{children}</Web3Provider>
       </body>
     </html>
   )
